@@ -1,0 +1,3 @@
+clang==14.0.6
+graphrag==0.1.0
+python-dotenv==1.0.0 

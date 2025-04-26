@@ -1,0 +1,744 @@
+[
+  {
+    "id": "0",
+    "text": "struct __fsid_t",
+    "type": "struct",
+    "name": "__fsid_t"
+  },
+  {
+    "id": "1",
+    "text": "struct __mbstate_t",
+    "type": "struct",
+    "name": "__mbstate_t"
+  },
+  {
+    "id": "2",
+    "text": "struct _G_fpos_t",
+    "type": "struct",
+    "name": "_G_fpos_t"
+  },
+  {
+    "id": "3",
+    "text": "struct _G_fpos64_t",
+    "type": "struct",
+    "name": "_G_fpos64_t"
+  },
+  {
+    "id": "4",
+    "text": "struct _IO_FILE",
+    "type": "struct",
+    "name": "_IO_FILE"
+  },
+  {
+    "id": "5",
+    "text": "struct _IO_marker",
+    "type": "struct",
+    "name": "_IO_marker"
+  },
+  {
+    "id": "6",
+    "text": "struct _IO_codecvt",
+    "type": "struct",
+    "name": "_IO_codecvt"
+  },
+  {
+    "id": "7",
+    "text": "struct _IO_wide_data",
+    "type": "struct",
+    "name": "_IO_wide_data"
+  },
+  {
+    "id": "8",
+    "text": "struct _IO_cookie_io_functions_t",
+    "type": "struct",
+    "name": "_IO_cookie_io_functions_t"
+  },
+  {
+    "id": "9",
+    "text": "function remove",
+    "type": "function",
+    "name": "remove"
+  },
+  {
+    "id": "10",
+    "text": "function rename",
+    "type": "function",
+    "name": "rename"
+  },
+  {
+    "id": "11",
+    "text": "function renameat",
+    "type": "function",
+    "name": "renameat"
+  },
+  {
+    "id": "12",
+    "text": "function fclose",
+    "type": "function",
+    "name": "fclose"
+  },
+  {
+    "id": "13",
+    "text": "function tmpfile",
+    "type": "function",
+    "name": "tmpfile"
+  },
+  {
+    "id": "14",
+    "text": "type FILE",
+    "type": "type",
+    "name": "FILE"
+  },
+  {
+    "id": "15",
+    "text": "function tmpnam",
+    "type": "function",
+    "name": "tmpnam"
+  },
+  {
+    "id": "16",
+    "text": "function tmpnam_r",
+    "type": "function",
+    "name": "tmpnam_r"
+  },
+  {
+    "id": "17",
+    "text": "function tempnam",
+    "type": "function",
+    "name": "tempnam"
+  },
+  {
+    "id": "18",
+    "text": "function fflush",
+    "type": "function",
+    "name": "fflush"
+  },
+  {
+    "id": "19",
+    "text": "function fflush_unlocked",
+    "type": "function",
+    "name": "fflush_unlocked"
+  },
+  {
+    "id": "20",
+    "text": "function fopen",
+    "type": "function",
+    "name": "fopen"
+  },
+  {
+    "id": "21",
+    "text": "function freopen",
+    "type": "function",
+    "name": "freopen"
+  },
+  {
+    "id": "22",
+    "text": "function fdopen",
+    "type": "function",
+    "name": "fdopen"
+  },
+  {
+    "id": "23",
+    "text": "function fopencookie",
+    "type": "function",
+    "name": "fopencookie"
+  },
+  {
+    "id": "24",
+    "text": "function fmemopen",
+    "type": "function",
+    "name": "fmemopen"
+  },
+  {
+    "id": "25",
+    "text": "function open_memstream",
+    "type": "function",
+    "name": "open_memstream"
+  },
+  {
+    "id": "26",
+    "text": "function setbuf",
+    "type": "function",
+    "name": "setbuf"
+  },
+  {
+    "id": "27",
+    "text": "function setvbuf",
+    "type": "function",
+    "name": "setvbuf"
+  },
+  {
+    "id": "28",
+    "text": "function setbuffer",
+    "type": "function",
+    "name": "setbuffer"
+  },
+  {
+    "id": "29",
+    "text": "function setlinebuf",
+    "type": "function",
+    "name": "setlinebuf"
+  },
+  {
+    "id": "30",
+    "text": "function fprintf",
+    "type": "function",
+    "name": "fprintf"
+  },
+  {
+    "id": "31",
+    "text": "function printf",
+    "type": "function",
+    "name": "printf"
+  },
+  {
+    "id": "32",
+    "text": "function sprintf",
+    "type": "function",
+    "name": "sprintf"
+  },
+  {
+    "id": "33",
+    "text": "function vfprintf",
+    "type": "function",
+    "name": "vfprintf"
+  },
+  {
+    "id": "34",
+    "text": "function vprintf",
+    "type": "function",
+    "name": "vprintf"
+  },
+  {
+    "id": "35",
+    "text": "function vsprintf",
+    "type": "function",
+    "name": "vsprintf"
+  },
+  {
+    "id": "36",
+    "text": "function snprintf",
+    "type": "function",
+    "name": "snprintf"
+  },
+  {
+    "id": "37",
+    "text": "function vsnprintf",
+    "type": "function",
+    "name": "vsnprintf"
+  },
+  {
+    "id": "38",
+    "text": "function vasprintf",
+    "type": "function",
+    "name": "vasprintf"
+  },
+  {
+    "id": "39",
+    "text": "function __asprintf",
+    "type": "function",
+    "name": "__asprintf"
+  },
+  {
+    "id": "40",
+    "text": "function asprintf",
+    "type": "function",
+    "name": "asprintf"
+  },
+  {
+    "id": "41",
+    "text": "function vdprintf",
+    "type": "function",
+    "name": "vdprintf"
+  },
+  {
+    "id": "42",
+    "text": "function dprintf",
+    "type": "function",
+    "name": "dprintf"
+  },
+  {
+    "id": "43",
+    "text": "function fscanf",
+    "type": "function",
+    "name": "fscanf"
+  },
+  {
+    "id": "44",
+    "text": "function scanf",
+    "type": "function",
+    "name": "scanf"
+  },
+  {
+    "id": "45",
+    "text": "function sscanf",
+    "type": "function",
+    "name": "sscanf"
+  },
+  {
+    "id": "46",
+    "text": "function vfscanf",
+    "type": "function",
+    "name": "vfscanf"
+  },
+  {
+    "id": "47",
+    "text": "function vscanf",
+    "type": "function",
+    "name": "vscanf"
+  },
+  {
+    "id": "48",
+    "text": "function vsscanf",
+    "type": "function",
+    "name": "vsscanf"
+  },
+  {
+    "id": "49",
+    "text": "function fgetc",
+    "type": "function",
+    "name": "fgetc"
+  },
+  {
+    "id": "50",
+    "text": "function getc",
+    "type": "function",
+    "name": "getc"
+  },
+  {
+    "id": "51",
+    "text": "function getchar",
+    "type": "function",
+    "name": "getchar"
+  },
+  {
+    "id": "52",
+    "text": "function getc_unlocked",
+    "type": "function",
+    "name": "getc_unlocked"
+  },
+  {
+    "id": "53",
+    "text": "function getchar_unlocked",
+    "type": "function",
+    "name": "getchar_unlocked"
+  },
+  {
+    "id": "54",
+    "text": "function fgetc_unlocked",
+    "type": "function",
+    "name": "fgetc_unlocked"
+  },
+  {
+    "id": "55",
+    "text": "function fputc",
+    "type": "function",
+    "name": "fputc"
+  },
+  {
+    "id": "56",
+    "text": "function putc",
+    "type": "function",
+    "name": "putc"
+  },
+  {
+    "id": "57",
+    "text": "function putchar",
+    "type": "function",
+    "name": "putchar"
+  },
+  {
+    "id": "58",
+    "text": "function fputc_unlocked",
+    "type": "function",
+    "name": "fputc_unlocked"
+  },
+  {
+    "id": "59",
+    "text": "function putc_unlocked",
+    "type": "function",
+    "name": "putc_unlocked"
+  },
+  {
+    "id": "60",
+    "text": "function putchar_unlocked",
+    "type": "function",
+    "name": "putchar_unlocked"
+  },
+  {
+    "id": "61",
+    "text": "function getw",
+    "type": "function",
+    "name": "getw"
+  },
+  {
+    "id": "62",
+    "text": "function putw",
+    "type": "function",
+    "name": "putw"
+  },
+  {
+    "id": "63",
+    "text": "function fgets",
+    "type": "function",
+    "name": "fgets"
+  },
+  {
+    "id": "64",
+    "text": "function __getdelim",
+    "type": "function",
+    "name": "__getdelim"
+  },
+  {
+    "id": "65",
+    "text": "type __ssize_t",
+    "type": "type",
+    "name": "__ssize_t"
+  },
+  {
+    "id": "66",
+    "text": "function getdelim",
+    "type": "function",
+    "name": "getdelim"
+  },
+  {
+    "id": "67",
+    "text": "function getline",
+    "type": "function",
+    "name": "getline"
+  },
+  {
+    "id": "68",
+    "text": "function fputs",
+    "type": "function",
+    "name": "fputs"
+  },
+  {
+    "id": "69",
+    "text": "function puts",
+    "type": "function",
+    "name": "puts"
+  },
+  {
+    "id": "70",
+    "text": "function ungetc",
+    "type": "function",
+    "name": "ungetc"
+  },
+  {
+    "id": "71",
+    "text": "function fread",
+    "type": "function",
+    "name": "fread"
+  },
+  {
+    "id": "72",
+    "text": "type size_t",
+    "type": "type",
+    "name": "size_t"
+  },
+  {
+    "id": "73",
+    "text": "function fwrite",
+    "type": "function",
+    "name": "fwrite"
+  },
+  {
+    "id": "74",
+    "text": "function fread_unlocked",
+    "type": "function",
+    "name": "fread_unlocked"
+  },
+  {
+    "id": "75",
+    "text": "function fwrite_unlocked",
+    "type": "function",
+    "name": "fwrite_unlocked"
+  },
+  {
+    "id": "76",
+    "text": "function fseek",
+    "type": "function",
+    "name": "fseek"
+  },
+  {
+    "id": "77",
+    "text": "function ftell",
+    "type": "function",
+    "name": "ftell"
+  },
+  {
+    "id": "78",
+    "text": "function rewind",
+    "type": "function",
+    "name": "rewind"
+  },
+  {
+    "id": "79",
+    "text": "function fseeko",
+    "type": "function",
+    "name": "fseeko"
+  },
+  {
+    "id": "80",
+    "text": "function ftello",
+    "type": "function",
+    "name": "ftello"
+  },
+  {
+    "id": "81",
+    "text": "type __off_t",
+    "type": "type",
+    "name": "__off_t"
+  },
+  {
+    "id": "82",
+    "text": "function fgetpos",
+    "type": "function",
+    "name": "fgetpos"
+  },
+  {
+    "id": "83",
+    "text": "function fsetpos",
+    "type": "function",
+    "name": "fsetpos"
+  },
+  {
+    "id": "84",
+    "text": "function clearerr",
+    "type": "function",
+    "name": "clearerr"
+  },
+  {
+    "id": "85",
+    "text": "function feof",
+    "type": "function",
+    "name": "feof"
+  },
+  {
+    "id": "86",
+    "text": "function ferror",
+    "type": "function",
+    "name": "ferror"
+  },
+  {
+    "id": "87",
+    "text": "function clearerr_unlocked",
+    "type": "function",
+    "name": "clearerr_unlocked"
+  },
+  {
+    "id": "88",
+    "text": "function feof_unlocked",
+    "type": "function",
+    "name": "feof_unlocked"
+  },
+  {
+    "id": "89",
+    "text": "function ferror_unlocked",
+    "type": "function",
+    "name": "ferror_unlocked"
+  },
+  {
+    "id": "90",
+    "text": "function perror",
+    "type": "function",
+    "name": "perror"
+  },
+  {
+    "id": "91",
+    "text": "function fileno",
+    "type": "function",
+    "name": "fileno"
+  },
+  {
+    "id": "92",
+    "text": "function fileno_unlocked",
+    "type": "function",
+    "name": "fileno_unlocked"
+  },
+  {
+    "id": "93",
+    "text": "function pclose",
+    "type": "function",
+    "name": "pclose"
+  },
+  {
+    "id": "94",
+    "text": "function popen",
+    "type": "function",
+    "name": "popen"
+  },
+  {
+    "id": "95",
+    "text": "function ctermid",
+    "type": "function",
+    "name": "ctermid"
+  },
+  {
+    "id": "96",
+    "text": "function flockfile",
+    "type": "function",
+    "name": "flockfile"
+  },
+  {
+    "id": "97",
+    "text": "function ftrylockfile",
+    "type": "function",
+    "name": "ftrylockfile"
+  },
+  {
+    "id": "98",
+    "text": "function funlockfile",
+    "type": "function",
+    "name": "funlockfile"
+  },
+  {
+    "id": "99",
+    "text": "function __uflow",
+    "type": "function",
+    "name": "__uflow"
+  },
+  {
+    "id": "100",
+    "text": "function __overflow",
+    "type": "function",
+    "name": "__overflow"
+  },
+  {
+    "id": "101",
+    "text": "function add",
+    "type": "function",
+    "name": "add"
+  },
+  {
+    "id": "102",
+    "text": "struct Person",
+    "type": "struct",
+    "name": "Person"
+  },
+  {
+    "id": "103",
+    "text": "function greet",
+    "type": "function",
+    "name": "greet"
+  },
+  {
+    "id": "104",
+    "text": "function main",
+    "type": "function",
+    "name": "main"
+  },
+  {
+    "id": "e0",
+    "text": "function 'tmpfile' uses type 'FILE'",
+    "source_id": "13",
+    "target_id": "14",
+    "relation": "uses"
+  },
+  {
+    "id": "e1",
+    "text": "function 'fopen' uses type 'FILE'",
+    "source_id": "20",
+    "target_id": "14",
+    "relation": "uses"
+  },
+  {
+    "id": "e2",
+    "text": "function 'freopen' uses type 'FILE'",
+    "source_id": "21",
+    "target_id": "14",
+    "relation": "uses"
+  },
+  {
+    "id": "e3",
+    "text": "function 'fdopen' uses type 'FILE'",
+    "source_id": "22",
+    "target_id": "14",
+    "relation": "uses"
+  },
+  {
+    "id": "e4",
+    "text": "function 'fopencookie' uses type 'FILE'",
+    "source_id": "23",
+    "target_id": "14",
+    "relation": "uses"
+  },
+  {
+    "id": "e5",
+    "text": "function 'fmemopen' uses type 'FILE'",
+    "source_id": "24",
+    "target_id": "14",
+    "relation": "uses"
+  },
+  {
+    "id": "e6",
+    "text": "function 'open_memstream' uses type 'FILE'",
+    "source_id": "25",
+    "target_id": "14",
+    "relation": "uses"
+  },
+  {
+    "id": "e7",
+    "text": "function '__getdelim' uses type '__ssize_t'",
+    "source_id": "64",
+    "target_id": "65",
+    "relation": "uses"
+  },
+  {
+    "id": "e8",
+    "text": "function 'getdelim' uses type '__ssize_t'",
+    "source_id": "66",
+    "target_id": "65",
+    "relation": "uses"
+  },
+  {
+    "id": "e9",
+    "text": "function 'getline' uses type '__ssize_t'",
+    "source_id": "67",
+    "target_id": "65",
+    "relation": "uses"
+  },
+  {
+    "id": "e10",
+    "text": "function 'fread' uses type 'size_t'",
+    "source_id": "71",
+    "target_id": "72",
+    "relation": "uses"
+  },
+  {
+    "id": "e11",
+    "text": "function 'fwrite' uses type 'size_t'",
+    "source_id": "73",
+    "target_id": "72",
+    "relation": "uses"
+  },
+  {
+    "id": "e12",
+    "text": "function 'fread_unlocked' uses type 'size_t'",
+    "source_id": "74",
+    "target_id": "72",
+    "relation": "uses"
+  },
+  {
+    "id": "e13",
+    "text": "function 'fwrite_unlocked' uses type 'size_t'",
+    "source_id": "75",
+    "target_id": "72",
+    "relation": "uses"
+  },
+  {
+    "id": "e14",
+    "text": "function 'ftello' uses type '__off_t'",
+    "source_id": "80",
+    "target_id": "81",
+    "relation": "uses"
+  },
+  {
+    "id": "e15",
+    "text": "function 'popen' uses type 'FILE'",
+    "source_id": "94",
+    "target_id": "14",
+    "relation": "uses"
+  }
+]

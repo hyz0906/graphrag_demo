@@ -1,0 +1,2981 @@
+15:58:03,648 graphrag.cli.index INFO Logging enabled at /home/hyz0906/study/neo4j_graph/logs/indexing-engine.log
+15:58:04,304 httpx INFO HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+16:00:11,488 graphrag.cli.index INFO Logging enabled at /home/hyz0906/study/neo4j_graph/logs/indexing-engine.log
+16:00:12,853 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:00:17,392 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/embeddings "HTTP/1.1 200 OK"
+16:00:17,396 graphrag.cli.index INFO Starting pipeline run. dry_run=False
+16:00:17,396 graphrag.cli.index INFO Using default configuration: {
+    "root_dir": "/home/hyz0906/study/neo4j_graph",
+    "models": {
+        "default_chat_model": {
+            "api_key": "==== REDACTED ====",
+            "auth_type": "api_key",
+            "type": "openai_chat",
+            "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+            "encoding_model": "cl100k_base",
+            "api_base": "https://api.siliconflow.cn/v1",
+            "api_version": null,
+            "deployment_name": null,
+            "proxy": null,
+            "audience": null,
+            "model_supports_json": true,
+            "request_timeout": 180.0,
+            "tokens_per_minute": 0,
+            "requests_per_minute": 0,
+            "retry_strategy": "native",
+            "max_retries": 10,
+            "max_retry_wait": 10.0,
+            "concurrent_requests": 25,
+            "async_mode": "threaded",
+            "responses": null,
+            "max_tokens": null,
+            "temperature": 0,
+            "max_completion_tokens": null,
+            "reasoning_effort": null,
+            "top_p": 1,
+            "n": 1,
+            "frequency_penalty": 0.0,
+            "presence_penalty": 0.0
+        },
+        "default_embedding_model": {
+            "api_key": "==== REDACTED ====",
+            "auth_type": "api_key",
+            "type": "openai_embedding",
+            "model": "BAAI/bge-large-en-v1.5",
+            "encoding_model": "cl100k_base",
+            "api_base": "https://api.siliconflow.cn/v1",
+            "api_version": null,
+            "deployment_name": null,
+            "proxy": null,
+            "audience": null,
+            "model_supports_json": true,
+            "request_timeout": 180.0,
+            "tokens_per_minute": 0,
+            "requests_per_minute": 0,
+            "retry_strategy": "native",
+            "max_retries": 10,
+            "max_retry_wait": 10.0,
+            "concurrent_requests": 25,
+            "async_mode": "threaded",
+            "responses": null,
+            "max_tokens": null,
+            "temperature": 0,
+            "max_completion_tokens": null,
+            "reasoning_effort": null,
+            "top_p": 1,
+            "n": 1,
+            "frequency_penalty": 0.0,
+            "presence_penalty": 0.0
+        }
+    },
+    "input": {
+        "type": "file",
+        "file_type": "text",
+        "base_dir": "input",
+        "storage_account_blob_url": null,
+        "encoding": "utf-8",
+        "file_pattern": ".*\\.txt$",
+        "file_filter": null,
+        "text_column": "text",
+        "title_column": null,
+        "metadata": null
+    },
+    "chunks": {
+        "size": 1200,
+        "overlap": 100,
+        "group_by_columns": [
+            "id"
+        ],
+        "strategy": "tokens",
+        "encoding_model": "cl100k_base",
+        "prepend_metadata": false,
+        "chunk_size_includes_metadata": false
+    },
+    "output": {
+        "type": "file",
+        "base_dir": "/home/hyz0906/study/neo4j_graph/output",
+        "storage_account_blob_url": null,
+        "cosmosdb_account_url": null
+    },
+    "outputs": null,
+    "update_index_output": {
+        "type": "file",
+        "base_dir": "/home/hyz0906/study/neo4j_graph/update_output",
+        "storage_account_blob_url": null,
+        "cosmosdb_account_url": null
+    },
+    "cache": {
+        "type": "file",
+        "base_dir": "cache",
+        "storage_account_blob_url": null,
+        "cosmosdb_account_url": null
+    },
+    "reporting": {
+        "type": "file",
+        "base_dir": "/home/hyz0906/study/neo4j_graph/logs",
+        "storage_account_blob_url": null
+    },
+    "vector_store": {
+        "default_vector_store": {
+            "type": "lancedb",
+            "db_uri": "/home/hyz0906/study/neo4j_graph/output/lancedb",
+            "url": null,
+            "audience": null,
+            "container_name": "==== REDACTED ====",
+            "database_name": null,
+            "overwrite": true
+        }
+    },
+    "workflows": null,
+    "embed_text": {
+        "model_id": "default_embedding_model",
+        "vector_store_id": "default_vector_store",
+        "batch_size": 16,
+        "batch_max_tokens": 8191,
+        "target": "required",
+        "names": [],
+        "strategy": null
+    },
+    "extract_graph": {
+        "model_id": "default_chat_model",
+        "prompt": "prompts/extract_graph.txt",
+        "entity_types": [
+            "organization",
+            "person",
+            "geo",
+            "event"
+        ],
+        "max_gleanings": 1,
+        "strategy": null
+    },
+    "summarize_descriptions": {
+        "model_id": "default_chat_model",
+        "prompt": "prompts/summarize_descriptions.txt",
+        "max_length": 500,
+        "max_input_tokens": 4000,
+        "strategy": null
+    },
+    "extract_graph_nlp": {
+        "normalize_edge_weights": true,
+        "text_analyzer": {
+            "extractor_type": "regex_english",
+            "model_name": "en_core_web_md",
+            "max_word_length": 15,
+            "word_delimiter": " ",
+            "include_named_entities": true,
+            "exclude_nouns": [
+                "stuff",
+                "thing",
+                "things",
+                "bunch",
+                "bit",
+                "bits",
+                "people",
+                "person",
+                "okay",
+                "hey",
+                "hi",
+                "hello",
+                "laughter",
+                "oh"
+            ],
+            "exclude_entity_tags": [
+                "DATE"
+            ],
+            "exclude_pos_tags": [
+                "DET",
+                "PRON",
+                "INTJ",
+                "X"
+            ],
+            "noun_phrase_tags": [
+                "PROPN",
+                "NOUNS"
+            ],
+            "noun_phrase_grammars": {
+                "PROPN,PROPN": "PROPN",
+                "NOUN,NOUN": "NOUNS",
+                "NOUNS,NOUN": "NOUNS",
+                "ADJ,ADJ": "ADJ",
+                "ADJ,NOUN": "NOUNS"
+            }
+        },
+        "concurrent_requests": 25
+    },
+    "prune_graph": {
+        "min_node_freq": 2,
+        "max_node_freq_std": null,
+        "min_node_degree": 1,
+        "max_node_degree_std": null,
+        "min_edge_weight_pct": 40.0,
+        "remove_ego_nodes": true,
+        "lcc_only": false
+    },
+    "cluster_graph": {
+        "max_cluster_size": 10,
+        "use_lcc": true,
+        "seed": 3735928559
+    },
+    "extract_claims": {
+        "enabled": false,
+        "model_id": "default_chat_model",
+        "prompt": "prompts/extract_claims.txt",
+        "description": "Any claims or facts that could be relevant to information discovery.",
+        "max_gleanings": 1,
+        "strategy": null
+    },
+    "community_reports": {
+        "model_id": "default_chat_model",
+        "graph_prompt": "prompts/community_report_graph.txt",
+        "text_prompt": "prompts/community_report_text.txt",
+        "max_length": 2000,
+        "max_input_length": 8000,
+        "strategy": null
+    },
+    "embed_graph": {
+        "enabled": false,
+        "dimensions": 1536,
+        "num_walks": 10,
+        "walk_length": 40,
+        "window_size": 2,
+        "iterations": 3,
+        "random_seed": 597832,
+        "use_lcc": true
+    },
+    "umap": {
+        "enabled": false
+    },
+    "snapshots": {
+        "embeddings": false,
+        "graphml": false,
+        "raw_graph": false
+    },
+    "local_search": {
+        "prompt": "prompts/local_search_system_prompt.txt",
+        "chat_model_id": "default_chat_model",
+        "embedding_model_id": "default_embedding_model",
+        "text_unit_prop": 0.5,
+        "community_prop": 0.15,
+        "conversation_history_max_turns": 5,
+        "top_k_entities": 10,
+        "top_k_relationships": 10,
+        "max_context_tokens": 12000
+    },
+    "global_search": {
+        "map_prompt": "prompts/global_search_map_system_prompt.txt",
+        "reduce_prompt": "prompts/global_search_reduce_system_prompt.txt",
+        "chat_model_id": "default_chat_model",
+        "knowledge_prompt": "prompts/global_search_knowledge_system_prompt.txt",
+        "max_context_tokens": 12000,
+        "data_max_tokens": 12000,
+        "map_max_length": 1000,
+        "reduce_max_length": 2000,
+        "dynamic_search_threshold": 1,
+        "dynamic_search_keep_parent": false,
+        "dynamic_search_num_repeats": 1,
+        "dynamic_search_use_summary": false,
+        "dynamic_search_max_level": 2
+    },
+    "drift_search": {
+        "prompt": "prompts/drift_search_system_prompt.txt",
+        "reduce_prompt": "prompts/drift_search_reduce_prompt.txt",
+        "chat_model_id": "default_chat_model",
+        "embedding_model_id": "default_embedding_model",
+        "data_max_tokens": 12000,
+        "reduce_max_tokens": null,
+        "reduce_temperature": 0,
+        "reduce_max_completion_tokens": null,
+        "concurrency": 32,
+        "drift_k_followups": 20,
+        "primer_folds": 5,
+        "primer_llm_max_tokens": 12000,
+        "n_depth": 3,
+        "local_search_text_unit_prop": 0.9,
+        "local_search_community_prop": 0.1,
+        "local_search_top_k_mapped_entities": 10,
+        "local_search_top_k_relationships": 10,
+        "local_search_max_data_tokens": 12000,
+        "local_search_temperature": 0,
+        "local_search_top_p": 1,
+        "local_search_n": 1,
+        "local_search_llm_max_gen_tokens": null,
+        "local_search_llm_max_gen_completion_tokens": null
+    },
+    "basic_search": {
+        "prompt": "prompts/basic_search_system_prompt.txt",
+        "chat_model_id": "default_chat_model",
+        "embedding_model_id": "default_embedding_model",
+        "k": 10,
+        "max_context_tokens": 12000
+    }
+}
+16:00:17,396 graphrag.storage.file_pipeline_storage INFO Creating file storage at /home/hyz0906/study/neo4j_graph/output
+16:00:17,397 graphrag.index.input.factory INFO loading input from root_dir=input
+16:00:17,397 graphrag.index.input.factory INFO using file storage for input
+16:00:17,399 graphrag.storage.file_pipeline_storage INFO search /home/hyz0906/study/neo4j_graph/input for files matching .*\.txt$
+16:00:57,850 graphrag.cli.index INFO Logging enabled at /home/hyz0906/study/neo4j_graph/logs/indexing-engine.log
+16:00:59,912 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:01:00,929 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/embeddings "HTTP/1.1 200 OK"
+16:01:00,931 graphrag.cli.index INFO Starting pipeline run. dry_run=False
+16:01:00,932 graphrag.cli.index INFO Using default configuration: {
+    "root_dir": "/home/hyz0906/study/neo4j_graph",
+    "models": {
+        "default_chat_model": {
+            "api_key": "==== REDACTED ====",
+            "auth_type": "api_key",
+            "type": "openai_chat",
+            "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+            "encoding_model": "cl100k_base",
+            "api_base": "https://api.siliconflow.cn/v1",
+            "api_version": null,
+            "deployment_name": null,
+            "proxy": null,
+            "audience": null,
+            "model_supports_json": true,
+            "request_timeout": 180.0,
+            "tokens_per_minute": 0,
+            "requests_per_minute": 0,
+            "retry_strategy": "native",
+            "max_retries": 10,
+            "max_retry_wait": 10.0,
+            "concurrent_requests": 25,
+            "async_mode": "threaded",
+            "responses": null,
+            "max_tokens": null,
+            "temperature": 0,
+            "max_completion_tokens": null,
+            "reasoning_effort": null,
+            "top_p": 1,
+            "n": 1,
+            "frequency_penalty": 0.0,
+            "presence_penalty": 0.0
+        },
+        "default_embedding_model": {
+            "api_key": "==== REDACTED ====",
+            "auth_type": "api_key",
+            "type": "openai_embedding",
+            "model": "BAAI/bge-large-en-v1.5",
+            "encoding_model": "cl100k_base",
+            "api_base": "https://api.siliconflow.cn/v1",
+            "api_version": null,
+            "deployment_name": null,
+            "proxy": null,
+            "audience": null,
+            "model_supports_json": true,
+            "request_timeout": 180.0,
+            "tokens_per_minute": 0,
+            "requests_per_minute": 0,
+            "retry_strategy": "native",
+            "max_retries": 10,
+            "max_retry_wait": 10.0,
+            "concurrent_requests": 25,
+            "async_mode": "threaded",
+            "responses": null,
+            "max_tokens": null,
+            "temperature": 0,
+            "max_completion_tokens": null,
+            "reasoning_effort": null,
+            "top_p": 1,
+            "n": 1,
+            "frequency_penalty": 0.0,
+            "presence_penalty": 0.0
+        }
+    },
+    "input": {
+        "type": "file",
+        "file_type": "json",
+        "base_dir": "input",
+        "storage_account_blob_url": null,
+        "encoding": "utf-8",
+        "file_pattern": ".*\\.json$",
+        "file_filter": null,
+        "text_column": "text",
+        "title_column": null,
+        "metadata": null
+    },
+    "chunks": {
+        "size": 1200,
+        "overlap": 100,
+        "group_by_columns": [
+            "id"
+        ],
+        "strategy": "tokens",
+        "encoding_model": "cl100k_base",
+        "prepend_metadata": false,
+        "chunk_size_includes_metadata": false
+    },
+    "output": {
+        "type": "file",
+        "base_dir": "/home/hyz0906/study/neo4j_graph/output",
+        "storage_account_blob_url": null,
+        "cosmosdb_account_url": null
+    },
+    "outputs": null,
+    "update_index_output": {
+        "type": "file",
+        "base_dir": "/home/hyz0906/study/neo4j_graph/update_output",
+        "storage_account_blob_url": null,
+        "cosmosdb_account_url": null
+    },
+    "cache": {
+        "type": "file",
+        "base_dir": "cache",
+        "storage_account_blob_url": null,
+        "cosmosdb_account_url": null
+    },
+    "reporting": {
+        "type": "file",
+        "base_dir": "/home/hyz0906/study/neo4j_graph/logs",
+        "storage_account_blob_url": null
+    },
+    "vector_store": {
+        "default_vector_store": {
+            "type": "lancedb",
+            "db_uri": "/home/hyz0906/study/neo4j_graph/output/lancedb",
+            "url": null,
+            "audience": null,
+            "container_name": "==== REDACTED ====",
+            "database_name": null,
+            "overwrite": true
+        }
+    },
+    "workflows": null,
+    "embed_text": {
+        "model_id": "default_embedding_model",
+        "vector_store_id": "default_vector_store",
+        "batch_size": 16,
+        "batch_max_tokens": 8191,
+        "target": "required",
+        "names": [],
+        "strategy": null
+    },
+    "extract_graph": {
+        "model_id": "default_chat_model",
+        "prompt": "prompts/extract_graph.txt",
+        "entity_types": [
+            "organization",
+            "person",
+            "geo",
+            "event"
+        ],
+        "max_gleanings": 1,
+        "strategy": null
+    },
+    "summarize_descriptions": {
+        "model_id": "default_chat_model",
+        "prompt": "prompts/summarize_descriptions.txt",
+        "max_length": 500,
+        "max_input_tokens": 4000,
+        "strategy": null
+    },
+    "extract_graph_nlp": {
+        "normalize_edge_weights": true,
+        "text_analyzer": {
+            "extractor_type": "regex_english",
+            "model_name": "en_core_web_md",
+            "max_word_length": 15,
+            "word_delimiter": " ",
+            "include_named_entities": true,
+            "exclude_nouns": [
+                "stuff",
+                "thing",
+                "things",
+                "bunch",
+                "bit",
+                "bits",
+                "people",
+                "person",
+                "okay",
+                "hey",
+                "hi",
+                "hello",
+                "laughter",
+                "oh"
+            ],
+            "exclude_entity_tags": [
+                "DATE"
+            ],
+            "exclude_pos_tags": [
+                "DET",
+                "PRON",
+                "INTJ",
+                "X"
+            ],
+            "noun_phrase_tags": [
+                "PROPN",
+                "NOUNS"
+            ],
+            "noun_phrase_grammars": {
+                "PROPN,PROPN": "PROPN",
+                "NOUN,NOUN": "NOUNS",
+                "NOUNS,NOUN": "NOUNS",
+                "ADJ,ADJ": "ADJ",
+                "ADJ,NOUN": "NOUNS"
+            }
+        },
+        "concurrent_requests": 25
+    },
+    "prune_graph": {
+        "min_node_freq": 2,
+        "max_node_freq_std": null,
+        "min_node_degree": 1,
+        "max_node_degree_std": null,
+        "min_edge_weight_pct": 40.0,
+        "remove_ego_nodes": true,
+        "lcc_only": false
+    },
+    "cluster_graph": {
+        "max_cluster_size": 10,
+        "use_lcc": true,
+        "seed": 3735928559
+    },
+    "extract_claims": {
+        "enabled": false,
+        "model_id": "default_chat_model",
+        "prompt": "prompts/extract_claims.txt",
+        "description": "Any claims or facts that could be relevant to information discovery.",
+        "max_gleanings": 1,
+        "strategy": null
+    },
+    "community_reports": {
+        "model_id": "default_chat_model",
+        "graph_prompt": "prompts/community_report_graph.txt",
+        "text_prompt": "prompts/community_report_text.txt",
+        "max_length": 2000,
+        "max_input_length": 8000,
+        "strategy": null
+    },
+    "embed_graph": {
+        "enabled": false,
+        "dimensions": 1536,
+        "num_walks": 10,
+        "walk_length": 40,
+        "window_size": 2,
+        "iterations": 3,
+        "random_seed": 597832,
+        "use_lcc": true
+    },
+    "umap": {
+        "enabled": false
+    },
+    "snapshots": {
+        "embeddings": false,
+        "graphml": false,
+        "raw_graph": false
+    },
+    "local_search": {
+        "prompt": "prompts/local_search_system_prompt.txt",
+        "chat_model_id": "default_chat_model",
+        "embedding_model_id": "default_embedding_model",
+        "text_unit_prop": 0.5,
+        "community_prop": 0.15,
+        "conversation_history_max_turns": 5,
+        "top_k_entities": 10,
+        "top_k_relationships": 10,
+        "max_context_tokens": 12000
+    },
+    "global_search": {
+        "map_prompt": "prompts/global_search_map_system_prompt.txt",
+        "reduce_prompt": "prompts/global_search_reduce_system_prompt.txt",
+        "chat_model_id": "default_chat_model",
+        "knowledge_prompt": "prompts/global_search_knowledge_system_prompt.txt",
+        "max_context_tokens": 12000,
+        "data_max_tokens": 12000,
+        "map_max_length": 1000,
+        "reduce_max_length": 2000,
+        "dynamic_search_threshold": 1,
+        "dynamic_search_keep_parent": false,
+        "dynamic_search_num_repeats": 1,
+        "dynamic_search_use_summary": false,
+        "dynamic_search_max_level": 2
+    },
+    "drift_search": {
+        "prompt": "prompts/drift_search_system_prompt.txt",
+        "reduce_prompt": "prompts/drift_search_reduce_prompt.txt",
+        "chat_model_id": "default_chat_model",
+        "embedding_model_id": "default_embedding_model",
+        "data_max_tokens": 12000,
+        "reduce_max_tokens": null,
+        "reduce_temperature": 0,
+        "reduce_max_completion_tokens": null,
+        "concurrency": 32,
+        "drift_k_followups": 20,
+        "primer_folds": 5,
+        "primer_llm_max_tokens": 12000,
+        "n_depth": 3,
+        "local_search_text_unit_prop": 0.9,
+        "local_search_community_prop": 0.1,
+        "local_search_top_k_mapped_entities": 10,
+        "local_search_top_k_relationships": 10,
+        "local_search_max_data_tokens": 12000,
+        "local_search_temperature": 0,
+        "local_search_top_p": 1,
+        "local_search_n": 1,
+        "local_search_llm_max_gen_tokens": null,
+        "local_search_llm_max_gen_completion_tokens": null
+    },
+    "basic_search": {
+        "prompt": "prompts/basic_search_system_prompt.txt",
+        "chat_model_id": "default_chat_model",
+        "embedding_model_id": "default_embedding_model",
+        "k": 10,
+        "max_context_tokens": 12000
+    }
+}
+16:01:00,932 graphrag.storage.file_pipeline_storage INFO Creating file storage at /home/hyz0906/study/neo4j_graph/output
+16:01:00,932 graphrag.index.input.factory INFO loading input from root_dir=input
+16:01:00,932 graphrag.index.input.factory INFO using file storage for input
+16:01:00,934 graphrag.index.input.json INFO Loading json files from input
+16:01:00,934 graphrag.storage.file_pipeline_storage INFO search /home/hyz0906/study/neo4j_graph/input for files matching .*\.json$
+16:01:00,965 graphrag.index.input.util WARNING text_column text not found in csv file code_graph.json
+16:01:00,966 graphrag.index.input.util INFO Found 1 InputFileType.json files, loading 1
+16:01:00,972 graphrag.index.input.util INFO Total number of unfiltered InputFileType.json rows: 1
+16:01:00,974 graphrag.index.run.run_pipeline INFO Final # of rows loaded: 1
+16:01:00,996 graphrag.utils.storage INFO reading table from storage: documents.parquet
+16:01:01,34 graphrag.index.run.run_pipeline ERROR error running workflow create_base_text_units
+Traceback (most recent call last):
+  File "/home/hyz0906/.local/lib/python3.12/site-packages/pandas/core/indexes/base.py", line 3805, in get_loc
+    return self._engine.get_loc(casted_key)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "index.pyx", line 167, in pandas._libs.index.IndexEngine.get_loc
+  File "index.pyx", line 196, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas/_libs/hashtable_class_helper.pxi", line 7081, in pandas._libs.hashtable.PyObjectHashTable.get_item
+  File "pandas/_libs/hashtable_class_helper.pxi", line 7089, in pandas._libs.hashtable.PyObjectHashTable.get_item
+KeyError: 'text'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/hyz0906/.local/lib/python3.12/site-packages/graphrag/index/run/run_pipeline.py", line 143, in _run_pipeline
+    result = await workflow_function(config, context)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/hyz0906/.local/lib/python3.12/site-packages/graphrag/index/workflows/create_base_text_units.py", line 32, in run_workflow
+    output = create_base_text_units(
+             ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/hyz0906/.local/lib/python3.12/site-packages/graphrag/index/workflows/create_base_text_units.py", line 64, in create_base_text_units
+    zip(*[sort[col] for col in ["id", "text"]], strict=True)
+          ~~~~^^^^^
+  File "/home/hyz0906/.local/lib/python3.12/site-packages/pandas/core/frame.py", line 4102, in __getitem__
+    indexer = self.columns.get_loc(key)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/hyz0906/.local/lib/python3.12/site-packages/pandas/core/indexes/base.py", line 3812, in get_loc
+    raise KeyError(key) from err
+KeyError: 'text'
+16:01:01,62 graphrag.callbacks.file_workflow_callbacks INFO Error running pipeline! details=None
+16:01:01,69 graphrag.cli.index ERROR Errors occurred during the pipeline run, see logs for more details.
+16:03:30,287 graphrag.cli.index INFO Logging enabled at /home/hyz0906/study/neo4j_graph/logs/indexing-engine.log
+16:03:31,609 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:03:32,623 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/embeddings "HTTP/1.1 200 OK"
+16:03:32,626 graphrag.cli.index INFO Starting pipeline run. dry_run=False
+16:03:32,626 graphrag.cli.index INFO Using default configuration: {
+    "root_dir": "/home/hyz0906/study/neo4j_graph",
+    "models": {
+        "default_chat_model": {
+            "api_key": "==== REDACTED ====",
+            "auth_type": "api_key",
+            "type": "openai_chat",
+            "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+            "encoding_model": "cl100k_base",
+            "api_base": "https://api.siliconflow.cn/v1",
+            "api_version": null,
+            "deployment_name": null,
+            "proxy": null,
+            "audience": null,
+            "model_supports_json": true,
+            "request_timeout": 180.0,
+            "tokens_per_minute": 0,
+            "requests_per_minute": 0,
+            "retry_strategy": "native",
+            "max_retries": 10,
+            "max_retry_wait": 10.0,
+            "concurrent_requests": 25,
+            "async_mode": "threaded",
+            "responses": null,
+            "max_tokens": null,
+            "temperature": 0,
+            "max_completion_tokens": null,
+            "reasoning_effort": null,
+            "top_p": 1,
+            "n": 1,
+            "frequency_penalty": 0.0,
+            "presence_penalty": 0.0
+        },
+        "default_embedding_model": {
+            "api_key": "==== REDACTED ====",
+            "auth_type": "api_key",
+            "type": "openai_embedding",
+            "model": "BAAI/bge-large-en-v1.5",
+            "encoding_model": "cl100k_base",
+            "api_base": "https://api.siliconflow.cn/v1",
+            "api_version": null,
+            "deployment_name": null,
+            "proxy": null,
+            "audience": null,
+            "model_supports_json": true,
+            "request_timeout": 180.0,
+            "tokens_per_minute": 0,
+            "requests_per_minute": 0,
+            "retry_strategy": "native",
+            "max_retries": 10,
+            "max_retry_wait": 10.0,
+            "concurrent_requests": 25,
+            "async_mode": "threaded",
+            "responses": null,
+            "max_tokens": null,
+            "temperature": 0,
+            "max_completion_tokens": null,
+            "reasoning_effort": null,
+            "top_p": 1,
+            "n": 1,
+            "frequency_penalty": 0.0,
+            "presence_penalty": 0.0
+        }
+    },
+    "input": {
+        "type": "file",
+        "file_type": "json",
+        "base_dir": "input",
+        "storage_account_blob_url": null,
+        "encoding": "utf-8",
+        "file_pattern": ".*\\.json$",
+        "file_filter": null,
+        "text_column": "text",
+        "title_column": null,
+        "metadata": null
+    },
+    "chunks": {
+        "size": 1200,
+        "overlap": 100,
+        "group_by_columns": [
+            "id"
+        ],
+        "strategy": "tokens",
+        "encoding_model": "cl100k_base",
+        "prepend_metadata": false,
+        "chunk_size_includes_metadata": false
+    },
+    "output": {
+        "type": "file",
+        "base_dir": "/home/hyz0906/study/neo4j_graph/output",
+        "storage_account_blob_url": null,
+        "cosmosdb_account_url": null
+    },
+    "outputs": null,
+    "update_index_output": {
+        "type": "file",
+        "base_dir": "/home/hyz0906/study/neo4j_graph/update_output",
+        "storage_account_blob_url": null,
+        "cosmosdb_account_url": null
+    },
+    "cache": {
+        "type": "file",
+        "base_dir": "cache",
+        "storage_account_blob_url": null,
+        "cosmosdb_account_url": null
+    },
+    "reporting": {
+        "type": "file",
+        "base_dir": "/home/hyz0906/study/neo4j_graph/logs",
+        "storage_account_blob_url": null
+    },
+    "vector_store": {
+        "default_vector_store": {
+            "type": "lancedb",
+            "db_uri": "/home/hyz0906/study/neo4j_graph/output/lancedb",
+            "url": null,
+            "audience": null,
+            "container_name": "==== REDACTED ====",
+            "database_name": null,
+            "overwrite": true
+        }
+    },
+    "workflows": null,
+    "embed_text": {
+        "model_id": "default_embedding_model",
+        "vector_store_id": "default_vector_store",
+        "batch_size": 16,
+        "batch_max_tokens": 8191,
+        "target": "required",
+        "names": [],
+        "strategy": null
+    },
+    "extract_graph": {
+        "model_id": "default_chat_model",
+        "prompt": "prompts/extract_graph.txt",
+        "entity_types": [
+            "organization",
+            "person",
+            "geo",
+            "event"
+        ],
+        "max_gleanings": 1,
+        "strategy": null
+    },
+    "summarize_descriptions": {
+        "model_id": "default_chat_model",
+        "prompt": "prompts/summarize_descriptions.txt",
+        "max_length": 500,
+        "max_input_tokens": 4000,
+        "strategy": null
+    },
+    "extract_graph_nlp": {
+        "normalize_edge_weights": true,
+        "text_analyzer": {
+            "extractor_type": "regex_english",
+            "model_name": "en_core_web_md",
+            "max_word_length": 15,
+            "word_delimiter": " ",
+            "include_named_entities": true,
+            "exclude_nouns": [
+                "stuff",
+                "thing",
+                "things",
+                "bunch",
+                "bit",
+                "bits",
+                "people",
+                "person",
+                "okay",
+                "hey",
+                "hi",
+                "hello",
+                "laughter",
+                "oh"
+            ],
+            "exclude_entity_tags": [
+                "DATE"
+            ],
+            "exclude_pos_tags": [
+                "DET",
+                "PRON",
+                "INTJ",
+                "X"
+            ],
+            "noun_phrase_tags": [
+                "PROPN",
+                "NOUNS"
+            ],
+            "noun_phrase_grammars": {
+                "PROPN,PROPN": "PROPN",
+                "NOUN,NOUN": "NOUNS",
+                "NOUNS,NOUN": "NOUNS",
+                "ADJ,ADJ": "ADJ",
+                "ADJ,NOUN": "NOUNS"
+            }
+        },
+        "concurrent_requests": 25
+    },
+    "prune_graph": {
+        "min_node_freq": 2,
+        "max_node_freq_std": null,
+        "min_node_degree": 1,
+        "max_node_degree_std": null,
+        "min_edge_weight_pct": 40.0,
+        "remove_ego_nodes": true,
+        "lcc_only": false
+    },
+    "cluster_graph": {
+        "max_cluster_size": 10,
+        "use_lcc": true,
+        "seed": 3735928559
+    },
+    "extract_claims": {
+        "enabled": false,
+        "model_id": "default_chat_model",
+        "prompt": "prompts/extract_claims.txt",
+        "description": "Any claims or facts that could be relevant to information discovery.",
+        "max_gleanings": 1,
+        "strategy": null
+    },
+    "community_reports": {
+        "model_id": "default_chat_model",
+        "graph_prompt": "prompts/community_report_graph.txt",
+        "text_prompt": "prompts/community_report_text.txt",
+        "max_length": 2000,
+        "max_input_length": 8000,
+        "strategy": null
+    },
+    "embed_graph": {
+        "enabled": false,
+        "dimensions": 1536,
+        "num_walks": 10,
+        "walk_length": 40,
+        "window_size": 2,
+        "iterations": 3,
+        "random_seed": 597832,
+        "use_lcc": true
+    },
+    "umap": {
+        "enabled": false
+    },
+    "snapshots": {
+        "embeddings": false,
+        "graphml": false,
+        "raw_graph": false
+    },
+    "local_search": {
+        "prompt": "prompts/local_search_system_prompt.txt",
+        "chat_model_id": "default_chat_model",
+        "embedding_model_id": "default_embedding_model",
+        "text_unit_prop": 0.5,
+        "community_prop": 0.15,
+        "conversation_history_max_turns": 5,
+        "top_k_entities": 10,
+        "top_k_relationships": 10,
+        "max_context_tokens": 12000
+    },
+    "global_search": {
+        "map_prompt": "prompts/global_search_map_system_prompt.txt",
+        "reduce_prompt": "prompts/global_search_reduce_system_prompt.txt",
+        "chat_model_id": "default_chat_model",
+        "knowledge_prompt": "prompts/global_search_knowledge_system_prompt.txt",
+        "max_context_tokens": 12000,
+        "data_max_tokens": 12000,
+        "map_max_length": 1000,
+        "reduce_max_length": 2000,
+        "dynamic_search_threshold": 1,
+        "dynamic_search_keep_parent": false,
+        "dynamic_search_num_repeats": 1,
+        "dynamic_search_use_summary": false,
+        "dynamic_search_max_level": 2
+    },
+    "drift_search": {
+        "prompt": "prompts/drift_search_system_prompt.txt",
+        "reduce_prompt": "prompts/drift_search_reduce_prompt.txt",
+        "chat_model_id": "default_chat_model",
+        "embedding_model_id": "default_embedding_model",
+        "data_max_tokens": 12000,
+        "reduce_max_tokens": null,
+        "reduce_temperature": 0,
+        "reduce_max_completion_tokens": null,
+        "concurrency": 32,
+        "drift_k_followups": 20,
+        "primer_folds": 5,
+        "primer_llm_max_tokens": 12000,
+        "n_depth": 3,
+        "local_search_text_unit_prop": 0.9,
+        "local_search_community_prop": 0.1,
+        "local_search_top_k_mapped_entities": 10,
+        "local_search_top_k_relationships": 10,
+        "local_search_max_data_tokens": 12000,
+        "local_search_temperature": 0,
+        "local_search_top_p": 1,
+        "local_search_n": 1,
+        "local_search_llm_max_gen_tokens": null,
+        "local_search_llm_max_gen_completion_tokens": null
+    },
+    "basic_search": {
+        "prompt": "prompts/basic_search_system_prompt.txt",
+        "chat_model_id": "default_chat_model",
+        "embedding_model_id": "default_embedding_model",
+        "k": 10,
+        "max_context_tokens": 12000
+    }
+}
+16:03:32,627 graphrag.storage.file_pipeline_storage INFO Creating file storage at /home/hyz0906/study/neo4j_graph/output
+16:03:32,627 graphrag.index.input.factory INFO loading input from root_dir=input
+16:03:32,627 graphrag.index.input.factory INFO using file storage for input
+16:03:32,629 graphrag.index.input.json INFO Loading json files from input
+16:03:32,629 graphrag.storage.file_pipeline_storage INFO search /home/hyz0906/study/neo4j_graph/input for files matching .*\.json$
+16:03:32,632 graphrag.index.input.util WARNING text_column text not found in csv file code_graph.json
+16:03:32,633 graphrag.index.input.util INFO Found 1 InputFileType.json files, loading 1
+16:03:32,633 graphrag.index.input.util INFO Total number of unfiltered InputFileType.json rows: 1
+16:03:32,636 graphrag.index.run.run_pipeline INFO Final # of rows loaded: 1
+16:03:32,648 graphrag.utils.storage INFO reading table from storage: documents.parquet
+16:03:32,667 graphrag.index.run.run_pipeline ERROR error running workflow create_base_text_units
+Traceback (most recent call last):
+  File "/home/hyz0906/.local/lib/python3.12/site-packages/pandas/core/indexes/base.py", line 3805, in get_loc
+    return self._engine.get_loc(casted_key)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "index.pyx", line 167, in pandas._libs.index.IndexEngine.get_loc
+  File "index.pyx", line 196, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas/_libs/hashtable_class_helper.pxi", line 7081, in pandas._libs.hashtable.PyObjectHashTable.get_item
+  File "pandas/_libs/hashtable_class_helper.pxi", line 7089, in pandas._libs.hashtable.PyObjectHashTable.get_item
+KeyError: 'text'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/hyz0906/.local/lib/python3.12/site-packages/graphrag/index/run/run_pipeline.py", line 143, in _run_pipeline
+    result = await workflow_function(config, context)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/hyz0906/.local/lib/python3.12/site-packages/graphrag/index/workflows/create_base_text_units.py", line 32, in run_workflow
+    output = create_base_text_units(
+             ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/hyz0906/.local/lib/python3.12/site-packages/graphrag/index/workflows/create_base_text_units.py", line 64, in create_base_text_units
+    zip(*[sort[col] for col in ["id", "text"]], strict=True)
+          ~~~~^^^^^
+  File "/home/hyz0906/.local/lib/python3.12/site-packages/pandas/core/frame.py", line 4102, in __getitem__
+    indexer = self.columns.get_loc(key)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/hyz0906/.local/lib/python3.12/site-packages/pandas/core/indexes/base.py", line 3812, in get_loc
+    raise KeyError(key) from err
+KeyError: 'text'
+16:03:32,670 graphrag.callbacks.file_workflow_callbacks INFO Error running pipeline! details=None
+16:03:32,677 graphrag.cli.index ERROR Errors occurred during the pipeline run, see logs for more details.
+16:13:23,674 graphrag.cli.index INFO Logging enabled at /home/hyz0906/study/neo4j_graph/logs/indexing-engine.log
+16:13:32,476 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:13:36,213 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/embeddings "HTTP/1.1 200 OK"
+16:13:36,226 graphrag.cli.index INFO Starting pipeline run. dry_run=False
+16:13:36,228 graphrag.cli.index INFO Using default configuration: {
+    "root_dir": "/home/hyz0906/study/neo4j_graph",
+    "models": {
+        "default_chat_model": {
+            "api_key": "==== REDACTED ====",
+            "auth_type": "api_key",
+            "type": "openai_chat",
+            "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+            "encoding_model": "cl100k_base",
+            "api_base": "https://api.siliconflow.cn/v1",
+            "api_version": null,
+            "deployment_name": null,
+            "proxy": null,
+            "audience": null,
+            "model_supports_json": true,
+            "request_timeout": 180.0,
+            "tokens_per_minute": 0,
+            "requests_per_minute": 0,
+            "retry_strategy": "native",
+            "max_retries": 10,
+            "max_retry_wait": 10.0,
+            "concurrent_requests": 25,
+            "async_mode": "threaded",
+            "responses": null,
+            "max_tokens": null,
+            "temperature": 0,
+            "max_completion_tokens": null,
+            "reasoning_effort": null,
+            "top_p": 1,
+            "n": 1,
+            "frequency_penalty": 0.0,
+            "presence_penalty": 0.0
+        },
+        "default_embedding_model": {
+            "api_key": "==== REDACTED ====",
+            "auth_type": "api_key",
+            "type": "openai_embedding",
+            "model": "BAAI/bge-large-en-v1.5",
+            "encoding_model": "cl100k_base",
+            "api_base": "https://api.siliconflow.cn/v1",
+            "api_version": null,
+            "deployment_name": null,
+            "proxy": null,
+            "audience": null,
+            "model_supports_json": true,
+            "request_timeout": 180.0,
+            "tokens_per_minute": 0,
+            "requests_per_minute": 0,
+            "retry_strategy": "native",
+            "max_retries": 10,
+            "max_retry_wait": 10.0,
+            "concurrent_requests": 25,
+            "async_mode": "threaded",
+            "responses": null,
+            "max_tokens": null,
+            "temperature": 0,
+            "max_completion_tokens": null,
+            "reasoning_effort": null,
+            "top_p": 1,
+            "n": 1,
+            "frequency_penalty": 0.0,
+            "presence_penalty": 0.0
+        }
+    },
+    "input": {
+        "type": "file",
+        "file_type": "json",
+        "base_dir": "input",
+        "storage_account_blob_url": null,
+        "encoding": "utf-8",
+        "file_pattern": ".*\\.json$",
+        "file_filter": null,
+        "text_column": "text",
+        "title_column": null,
+        "metadata": null
+    },
+    "chunks": {
+        "size": 1200,
+        "overlap": 100,
+        "group_by_columns": [
+            "id"
+        ],
+        "strategy": "tokens",
+        "encoding_model": "cl100k_base",
+        "prepend_metadata": false,
+        "chunk_size_includes_metadata": false
+    },
+    "output": {
+        "type": "file",
+        "base_dir": "/home/hyz0906/study/neo4j_graph/output",
+        "storage_account_blob_url": null,
+        "cosmosdb_account_url": null
+    },
+    "outputs": null,
+    "update_index_output": {
+        "type": "file",
+        "base_dir": "/home/hyz0906/study/neo4j_graph/update_output",
+        "storage_account_blob_url": null,
+        "cosmosdb_account_url": null
+    },
+    "cache": {
+        "type": "file",
+        "base_dir": "cache",
+        "storage_account_blob_url": null,
+        "cosmosdb_account_url": null
+    },
+    "reporting": {
+        "type": "file",
+        "base_dir": "/home/hyz0906/study/neo4j_graph/logs",
+        "storage_account_blob_url": null
+    },
+    "vector_store": {
+        "default_vector_store": {
+            "type": "lancedb",
+            "db_uri": "/home/hyz0906/study/neo4j_graph/output/lancedb",
+            "url": null,
+            "audience": null,
+            "container_name": "==== REDACTED ====",
+            "database_name": null,
+            "overwrite": true
+        }
+    },
+    "workflows": null,
+    "embed_text": {
+        "model_id": "default_embedding_model",
+        "vector_store_id": "default_vector_store",
+        "batch_size": 16,
+        "batch_max_tokens": 8191,
+        "target": "required",
+        "names": [],
+        "strategy": null
+    },
+    "extract_graph": {
+        "model_id": "default_chat_model",
+        "prompt": "prompts/extract_graph.txt",
+        "entity_types": [
+            "organization",
+            "person",
+            "geo",
+            "event"
+        ],
+        "max_gleanings": 1,
+        "strategy": null
+    },
+    "summarize_descriptions": {
+        "model_id": "default_chat_model",
+        "prompt": "prompts/summarize_descriptions.txt",
+        "max_length": 500,
+        "max_input_tokens": 4000,
+        "strategy": null
+    },
+    "extract_graph_nlp": {
+        "normalize_edge_weights": true,
+        "text_analyzer": {
+            "extractor_type": "regex_english",
+            "model_name": "en_core_web_md",
+            "max_word_length": 15,
+            "word_delimiter": " ",
+            "include_named_entities": true,
+            "exclude_nouns": [
+                "stuff",
+                "thing",
+                "things",
+                "bunch",
+                "bit",
+                "bits",
+                "people",
+                "person",
+                "okay",
+                "hey",
+                "hi",
+                "hello",
+                "laughter",
+                "oh"
+            ],
+            "exclude_entity_tags": [
+                "DATE"
+            ],
+            "exclude_pos_tags": [
+                "DET",
+                "PRON",
+                "INTJ",
+                "X"
+            ],
+            "noun_phrase_tags": [
+                "PROPN",
+                "NOUNS"
+            ],
+            "noun_phrase_grammars": {
+                "PROPN,PROPN": "PROPN",
+                "NOUN,NOUN": "NOUNS",
+                "NOUNS,NOUN": "NOUNS",
+                "ADJ,ADJ": "ADJ",
+                "ADJ,NOUN": "NOUNS"
+            }
+        },
+        "concurrent_requests": 25
+    },
+    "prune_graph": {
+        "min_node_freq": 2,
+        "max_node_freq_std": null,
+        "min_node_degree": 1,
+        "max_node_degree_std": null,
+        "min_edge_weight_pct": 40.0,
+        "remove_ego_nodes": true,
+        "lcc_only": false
+    },
+    "cluster_graph": {
+        "max_cluster_size": 10,
+        "use_lcc": true,
+        "seed": 3735928559
+    },
+    "extract_claims": {
+        "enabled": false,
+        "model_id": "default_chat_model",
+        "prompt": "prompts/extract_claims.txt",
+        "description": "Any claims or facts that could be relevant to information discovery.",
+        "max_gleanings": 1,
+        "strategy": null
+    },
+    "community_reports": {
+        "model_id": "default_chat_model",
+        "graph_prompt": "prompts/community_report_graph.txt",
+        "text_prompt": "prompts/community_report_text.txt",
+        "max_length": 2000,
+        "max_input_length": 8000,
+        "strategy": null
+    },
+    "embed_graph": {
+        "enabled": false,
+        "dimensions": 1536,
+        "num_walks": 10,
+        "walk_length": 40,
+        "window_size": 2,
+        "iterations": 3,
+        "random_seed": 597832,
+        "use_lcc": true
+    },
+    "umap": {
+        "enabled": false
+    },
+    "snapshots": {
+        "embeddings": false,
+        "graphml": false,
+        "raw_graph": false
+    },
+    "local_search": {
+        "prompt": "prompts/local_search_system_prompt.txt",
+        "chat_model_id": "default_chat_model",
+        "embedding_model_id": "default_embedding_model",
+        "text_unit_prop": 0.5,
+        "community_prop": 0.15,
+        "conversation_history_max_turns": 5,
+        "top_k_entities": 10,
+        "top_k_relationships": 10,
+        "max_context_tokens": 12000
+    },
+    "global_search": {
+        "map_prompt": "prompts/global_search_map_system_prompt.txt",
+        "reduce_prompt": "prompts/global_search_reduce_system_prompt.txt",
+        "chat_model_id": "default_chat_model",
+        "knowledge_prompt": "prompts/global_search_knowledge_system_prompt.txt",
+        "max_context_tokens": 12000,
+        "data_max_tokens": 12000,
+        "map_max_length": 1000,
+        "reduce_max_length": 2000,
+        "dynamic_search_threshold": 1,
+        "dynamic_search_keep_parent": false,
+        "dynamic_search_num_repeats": 1,
+        "dynamic_search_use_summary": false,
+        "dynamic_search_max_level": 2
+    },
+    "drift_search": {
+        "prompt": "prompts/drift_search_system_prompt.txt",
+        "reduce_prompt": "prompts/drift_search_reduce_prompt.txt",
+        "chat_model_id": "default_chat_model",
+        "embedding_model_id": "default_embedding_model",
+        "data_max_tokens": 12000,
+        "reduce_max_tokens": null,
+        "reduce_temperature": 0,
+        "reduce_max_completion_tokens": null,
+        "concurrency": 32,
+        "drift_k_followups": 20,
+        "primer_folds": 5,
+        "primer_llm_max_tokens": 12000,
+        "n_depth": 3,
+        "local_search_text_unit_prop": 0.9,
+        "local_search_community_prop": 0.1,
+        "local_search_top_k_mapped_entities": 10,
+        "local_search_top_k_relationships": 10,
+        "local_search_max_data_tokens": 12000,
+        "local_search_temperature": 0,
+        "local_search_top_p": 1,
+        "local_search_n": 1,
+        "local_search_llm_max_gen_tokens": null,
+        "local_search_llm_max_gen_completion_tokens": null
+    },
+    "basic_search": {
+        "prompt": "prompts/basic_search_system_prompt.txt",
+        "chat_model_id": "default_chat_model",
+        "embedding_model_id": "default_embedding_model",
+        "k": 10,
+        "max_context_tokens": 12000
+    }
+}
+16:13:36,230 graphrag.storage.file_pipeline_storage INFO Creating file storage at /home/hyz0906/study/neo4j_graph/output
+16:13:36,230 graphrag.index.input.factory INFO loading input from root_dir=input
+16:13:36,230 graphrag.index.input.factory INFO using file storage for input
+16:13:36,236 graphrag.index.input.json INFO Loading json files from input
+16:13:36,237 graphrag.storage.file_pipeline_storage INFO search /home/hyz0906/study/neo4j_graph/input for files matching .*\.json$
+16:13:36,246 graphrag.index.input.util INFO Found 1 InputFileType.json files, loading 1
+16:13:36,246 graphrag.index.input.util INFO Total number of unfiltered InputFileType.json rows: 121
+16:13:36,251 graphrag.index.run.run_pipeline INFO Final # of rows loaded: 121
+16:13:36,263 graphrag.utils.storage INFO reading table from storage: documents.parquet
+16:13:36,454 graphrag.utils.storage INFO reading table from storage: documents.parquet
+16:13:36,458 graphrag.utils.storage INFO reading table from storage: text_units.parquet
+16:13:36,501 graphrag.utils.storage INFO reading table from storage: text_units.parquet
+16:13:41,151 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:13:41,175 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:13:41,262 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:13:41,286 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:13:41,294 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:13:41,307 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:13:41,378 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:13:41,392 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:13:41,403 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:13:41,403 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:13:41,407 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:13:41,436 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:13:41,437 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:13:41,453 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:13:41,460 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:13:41,467 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:13:41,602 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:13:41,662 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:13:41,790 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:13:41,816 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:13:41,932 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:13:41,974 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:13:42,20 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:13:42,107 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:13:42,229 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:13:44,760 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:13:44,824 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:13:44,830 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:13:44,964 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:13:44,981 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:13:44,991 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:13:45,21 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:13:45,37 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:13:45,131 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:13:45,144 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:13:45,209 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:13:45,281 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:13:45,330 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:13:45,344 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:13:45,470 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:13:45,471 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:13:45,472 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:13:45,599 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:13:45,704 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:13:45,849 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:13:45,874 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:13:45,875 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:13:45,900 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:13:46,29 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:13:46,217 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:13:48,329 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:13:48,443 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:13:48,534 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:13:48,675 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:13:48,741 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:13:48,756 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:13:48,758 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:13:48,778 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:13:48,787 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:13:48,919 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:13:48,936 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:13:48,971 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:13:49,49 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:13:49,84 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:13:49,85 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:13:49,213 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:13:49,250 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:13:49,372 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:13:49,398 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:13:49,496 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:13:49,621 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:13:49,694 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:13:49,713 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:13:49,819 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:13:49,842 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:13:52,124 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:13:52,257 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:13:52,298 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:13:52,410 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:13:52,414 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:13:52,425 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:13:52,453 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:13:52,468 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:13:52,550 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:13:52,617 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:13:52,643 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:13:52,710 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:13:52,785 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:13:52,793 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:13:52,795 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:13:52,856 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:13:52,988 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:13:53,61 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:13:53,107 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:13:53,167 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:13:53,345 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:13:53,496 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:13:53,503 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:13:53,530 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:13:54,42 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:13:55,674 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:13:55,924 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:13:55,954 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:13:56,40 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:13:56,79 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:13:56,114 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:13:56,137 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:13:56,174 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:13:56,287 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:13:56,334 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:13:56,347 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:13:56,378 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:13:56,385 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:13:56,442 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:13:56,976 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:13:56,980 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:13:57,5 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:13:57,160 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:13:57,187 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:13:57,219 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:13:57,305 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:13:57,363 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:13:57,392 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:13:57,455 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:13:57,874 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:13:59,230 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:13:59,940 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:14:00,48 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:14:00,157 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:14:00,159 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:14:00,165 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:14:00,185 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:14:00,216 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:14:00,228 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:14:00,245 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:14:00,255 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:14:00,308 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:14:00,318 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:14:00,370 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:14:00,580 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:14:00,682 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:14:00,779 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:14:00,801 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:14:00,839 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:14:00,869 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:14:00,948 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:14:01,74 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:14:01,100 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:14:01,122 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:14:05,158 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:14:06,687 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:14:07,145 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:14:07,193 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:14:07,280 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:14:07,356 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:14:07,376 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:14:07,406 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:14:07,446 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:14:07,484 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:14:07,513 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:14:07,537 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:14:07,576 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:14:07,629 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:14:07,642 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:14:07,945 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:14:07,949 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:14:08,37 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:14:08,143 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:14:08,146 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:14:08,167 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:14:08,220 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:14:08,270 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:14:08,298 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:14:08,526 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:14:08,929 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:14:10,544 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:14:10,805 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:14:10,887 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:14:10,949 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:14:10,968 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:14:11,96 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:14:11,117 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:14:11,152 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:14:11,158 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:14:11,202 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:14:11,283 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:14:11,366 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:14:11,382 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:14:11,596 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:14:11,625 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:14:11,695 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:14:11,707 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:14:11,726 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:14:11,815 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:14:11,817 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:14:11,907 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:14:11,918 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:14:11,969 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:14:12,162 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:14:12,986 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:14:14,320 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:14:14,531 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:14:14,540 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:14:14,621 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:14:14,738 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:14:15,13 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:14:15,403 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:14:15,491 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:14:15,700 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:14:15,759 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:14:15,969 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:14:16,690 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:14:16,825 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:14:16,911 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:14:17,172 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:14:17,761 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:14:17,991 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:14:18,161 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:14:18,168 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:14:18,207 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:14:18,221 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:14:18,363 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:14:18,430 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:14:18,547 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:14:18,582 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:14:18,602 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:14:18,900 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:14:19,386 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:14:20,155 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:14:20,439 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:14:20,615 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:14:21,65 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:14:21,576 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:14:22,34 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:14:22,102 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:14:22,446 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:14:22,885 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:14:23,729 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:14:23,749 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:14:24,632 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:14:25,741 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:14:25,831 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:14:31,95 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:14:32,560 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:14:34,165 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:14:34,226 graphrag.utils.storage INFO reading table from storage: entities.parquet
+16:14:34,230 graphrag.utils.storage INFO reading table from storage: relationships.parquet
+16:14:34,295 graphrag.utils.storage INFO reading table from storage: entities.parquet
+16:14:34,299 graphrag.utils.storage INFO reading table from storage: relationships.parquet
+16:14:34,384 graphrag.utils.storage INFO reading table from storage: text_units.parquet
+16:14:34,387 graphrag.utils.storage INFO reading table from storage: entities.parquet
+16:14:34,391 graphrag.utils.storage INFO reading table from storage: relationships.parquet
+16:14:34,578 graphrag.utils.storage INFO reading table from storage: relationships.parquet
+16:14:34,582 graphrag.utils.storage INFO reading table from storage: entities.parquet
+16:14:34,586 graphrag.utils.storage INFO reading table from storage: communities.parquet
+16:14:34,658 graphrag.index.operations.summarize_communities.graph_context.context_builder INFO Number of nodes at level=0 => 10
+16:14:49,400 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:14:53,85 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:14:56,291 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:15:17,347 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:15:27,499 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:15:39,744 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:15:39,830 graphrag.utils.storage INFO reading table from storage: documents.parquet
+16:15:39,835 graphrag.utils.storage INFO reading table from storage: relationships.parquet
+16:15:39,839 graphrag.utils.storage INFO reading table from storage: text_units.parquet
+16:15:39,843 graphrag.utils.storage INFO reading table from storage: entities.parquet
+16:15:39,847 graphrag.utils.storage INFO reading table from storage: community_reports.parquet
+16:15:39,853 graphrag.index.workflows.generate_text_embeddings INFO Creating embeddings
+16:15:39,853 graphrag.index.operations.embed_text.embed_text INFO using vector store lancedb with container_name default for embedding community.full_content: default-community-full_content
+16:15:39,930 graphrag.index.operations.embed_text.strategies.openai INFO embedding 3 inputs via 3 snippets using 1 batches. max_batch_size=16, batch_max_tokens=8191
+16:15:41,515 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/embeddings "HTTP/1.1 413 Request Entity Too Large"
+16:15:41,655 graphrag.callbacks.file_workflow_callbacks INFO Error Invoking LLM details={'prompt': ["# C++ Programming Community\n\nThe community revolves around the C++ programming language, which is a superset of C and adds object-oriented programming features. The community includes the FILE data type and the TMPFILE function, which are integral components of C++ programming.\n\n## C++ as the central language\n\nC++ is the central entity in this community, serving as the primary programming language. Its significance is underscored by its widespread use in software development and its role in the broader field of computer science. The language's object-oriented features add complexity and depth to its applications, making it a crucial component of the community. [Data: Entities (6), Relationships (7)]\n\n## FILE data type's role\n\nThe FILE data type is a fundamental component of C++ programming, used to represent a sequence of bytes. Its importance is highlighted by its widespread use in file handling operations. The relationship between C++ and FILE is crucial in understanding the technical aspects of the community. [Data: Entities (1), Relationships (7)]\n\n## TMPFILE function's significance\n\nThe TMPFILE function is a crucial component of C++ programming, used to create temporary files. Its significance is underscored by its widespread use in various applications, including testing and development. The relationship between TMPFILE and FILE is essential in understanding the technical aspects of the community. [Data: Entities (0), Relationships (0, 1)]\n\n## Relationship between C++ and FILE\n\nC++ uses the FILE data type, which is a fundamental component of the language. This relationship underscores the technical nature of the community and highlights the importance of the FILE data type in C++ programming. [Data: Entities (6, 1), Relationships (7)]\n\n## Relationship between TMPFILE and FILE\n\nTMPFILE uses the FILE data type, which is a fundamental component of C++ programming. This relationship underscores the technical nature of the community and highlights the importance of the FILE data type in C++ programming. [Data: Entities (0, 1), Relationships (0, 1)]", "# C Programming Language and Related Functions\n\nThe community revolves around the C programming language, which is a general-purpose programming language. The community includes entities such as FREAD, SIZE_T, FILE, FWRITE, and FWRITE_UNLOCKED, all of which are related to file operations and data types in C.\n\n## C Programming Language as the central entity\n\nC is the central entity in this community, serving as the general-purpose programming language. This language is the common link between all other entities, suggesting its significance in the community. The community's focus on C and its related functions indicates a technical and educational context. [Data: Entities (5), Relationships (4, 6)]\n\n## SIZE_T as a fundamental data type\n\nSIZE_T is a fundamental data type in the C programming language, used to represent the size of objects in bytes. It is a crucial component of memory management and data structures in C. The community's focus on SIZE_T indicates its importance in the technical context. [Data: Entities (4), Relationships (1, 4)]\n\n## FREAD function for reading data\n\nFREAD is a function used in C and C++ programming languages for reading data from a file. The function uses the type SIZE_T to specify the number of bytes to read. The community's focus on FREAD indicates its importance in file operations. [Data: Entities (3), Relationships (1)]\n\n## FWRITE function for writing data\n\nFWRITE is a function in C that writes data to a file. The function uses the type SIZE_T to specify the number of bytes to write. The community's focus on FWRITE indicates its importance in file operations. [Data: Entities (7), Relationships (8)]\n\n## FWRITE_UNLOCKED function for writing data\n\nFWRITE_UNLOCKED is a function that uses the type SIZE_T for its operations. The community's focus on FWRITE_UNLOCKED indicates its importance in file operations, particularly in scenarios where thread safety is not a concern. [Data: Entities (9), Relationships (9)]", "# POPOP and its Relationship with FILE and SUBPROCESS\n\nThe community revolves around the 'popen' function, which is used to open a file in a subprocess. The 'popen' function has relationships with the 'FILE' type and the 'SUBPROCESS' type, all of which are essential components in the execution of the function.\n\n## POPOP as the central function\n\nPOPOP is the central entity in this community, serving as the function used to open a file in a subprocess. This function is a key component in the execution of subprocesses and could be used for various purposes, such as reading or writing to files. The relationship between POPOP and the FILE type is crucial in understanding the functionality of this community. [Data: Entities (10), Relationships (10)]\n\n## FILE as the target of POPOP\n\nFILE is the target of the POPOP function, representing the file that is opened in a subprocess. This file could be used for various purposes, such as reading or writing data. The relationship between POPOP and the FILE type is crucial in understanding the functionality of this community. [Data: Entities (11), Relationships (10)]\n\n## SUBPROCESS as the context of POPOP\n\nSUBPROCESS is the context in which the POPOP function is executed, representing the separate process that is created and run by another process. This subprocess could be used for various purposes, such as running a command or executing a program. The relationship between POPOP and the SUBPROCESS type is crucial in understanding the functionality of this community. [Data: Entities (11), Relationships (11)]\n\n## Role of POPOP in the execution of subprocesses\n\nPOPOP is a key function in the execution of subprocesses, allowing for the opening of files in a separate process. This function could be used for various purposes, such as reading or writing data. The relationship between POPOP and the FILE and SUBPROCESS types is crucial in understanding the functionality of this community. [Data: Relationships (10, 11)]\n\n## Technical nature of the entities involved\n\nThe entities involved in this community are technical in nature, representing the 'popen' function, the 'FILE' type, and the 'SUBPROCESS' type. These entities are essential components in the execution of subprocesses and could be used for various purposes, such as reading or writing data. The technical nature of these entities suggests that the community is focused on technical aspects and could be of interest to individuals or organizations with a technical background. [Data: Entities (10, 11), Relationships (10, 11)]"], 'kwargs': {}}
+16:15:41,655 graphrag.index.run.run_pipeline ERROR error running workflow generate_text_embeddings
+Traceback (most recent call last):
+  File "/home/hyz0906/.local/lib/python3.12/site-packages/graphrag/index/run/run_pipeline.py", line 143, in _run_pipeline
+    result = await workflow_function(config, context)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/hyz0906/.local/lib/python3.12/site-packages/graphrag/index/workflows/generate_text_embeddings.py", line 63, in run_workflow
+    output = await generate_text_embeddings(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/hyz0906/.local/lib/python3.12/site-packages/graphrag/index/workflows/generate_text_embeddings.py", line 154, in generate_text_embeddings
+    outputs[field] = await _run_and_snapshot_embeddings(
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/hyz0906/.local/lib/python3.12/site-packages/graphrag/index/workflows/generate_text_embeddings.py", line 173, in _run_and_snapshot_embeddings
+    data["embedding"] = await embed_text(
+                        ^^^^^^^^^^^^^^^^^
+  File "/home/hyz0906/.local/lib/python3.12/site-packages/graphrag/index/operations/embed_text/embed_text.py", line 59, in embed_text
+    return await _text_embed_with_vector_store(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/hyz0906/.local/lib/python3.12/site-packages/graphrag/index/operations/embed_text/embed_text.py", line 153, in _text_embed_with_vector_store
+    result = await strategy_exec(texts, callbacks, cache, strategy_config)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/hyz0906/.local/lib/python3.12/site-packages/graphrag/index/operations/embed_text/strategies/openai.py", line 68, in run
+    embeddings = await _execute(model, text_batches, ticker, semaphore)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/hyz0906/.local/lib/python3.12/site-packages/graphrag/index/operations/embed_text/strategies/openai.py", line 97, in _execute
+    results = await asyncio.gather(*futures)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/hyz0906/.local/lib/python3.12/site-packages/graphrag/index/operations/embed_text/strategies/openai.py", line 91, in embed
+    chunk_embeddings = await model.aembed_batch(chunk)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/hyz0906/.local/lib/python3.12/site-packages/graphrag/language_model/providers/fnllm/models.py", line 185, in aembed_batch
+    response = await self.model(text_list, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/hyz0906/.local/lib/python3.12/site-packages/fnllm/base/base_llm.py", line 144, in __call__
+    return await self._decorated_target(prompt, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/hyz0906/.local/lib/python3.12/site-packages/fnllm/base/services/cached.py", line 115, in invoke
+    result = await delegate(prompt, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/hyz0906/.local/lib/python3.12/site-packages/fnllm/base/services/rate_limiter.py", line 75, in invoke
+    result = await delegate(prompt, **args)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/hyz0906/.local/lib/python3.12/site-packages/fnllm/base/base_llm.py", line 126, in _decorator_target
+    output = await self._execute_llm(prompt, kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/hyz0906/.local/lib/python3.12/site-packages/fnllm/openai/llm/openai_embeddings_llm.py", line 126, in _execute_llm
+    result = await self._client.embeddings.create(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/hyz0906/.local/lib/python3.12/site-packages/openai/resources/embeddings.py", line 243, in create
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+  File "/home/hyz0906/.local/lib/python3.12/site-packages/openai/_base_client.py", line 1767, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/hyz0906/.local/lib/python3.12/site-packages/openai/_base_client.py", line 1461, in request
+    return await self._request(
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/home/hyz0906/.local/lib/python3.12/site-packages/openai/_base_client.py", line 1562, in _request
+    raise self._make_status_error_from_response(err.response) from None
+openai.APIStatusError: Error code: 413 - {'code': 20042, 'message': 'input must have less than 512 tokens', 'data': None}
+16:15:41,659 graphrag.callbacks.file_workflow_callbacks INFO Error running pipeline! details=None
+16:15:41,696 graphrag.cli.index ERROR Errors occurred during the pipeline run, see logs for more details.
+16:39:22,155 graphrag.cli.index INFO Logging enabled at /home/hyz0906/study/neo4j_graph/logs/indexing-engine.log
+16:39:24,108 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:39:25,106 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/embeddings "HTTP/1.1 200 OK"
+16:39:25,110 graphrag.cli.index INFO Starting pipeline run. dry_run=False
+16:39:25,110 graphrag.cli.index INFO Using default configuration: {
+    "root_dir": "/home/hyz0906/study/neo4j_graph",
+    "models": {
+        "default_chat_model": {
+            "api_key": "==== REDACTED ====",
+            "auth_type": "api_key",
+            "type": "openai_chat",
+            "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+            "encoding_model": "cl100k_base",
+            "api_base": "https://api.siliconflow.cn/v1",
+            "api_version": null,
+            "deployment_name": null,
+            "proxy": null,
+            "audience": null,
+            "model_supports_json": true,
+            "request_timeout": 180.0,
+            "tokens_per_minute": 0,
+            "requests_per_minute": 0,
+            "retry_strategy": "native",
+            "max_retries": 10,
+            "max_retry_wait": 10.0,
+            "concurrent_requests": 25,
+            "async_mode": "threaded",
+            "responses": null,
+            "max_tokens": null,
+            "temperature": 0,
+            "max_completion_tokens": null,
+            "reasoning_effort": null,
+            "top_p": 1,
+            "n": 1,
+            "frequency_penalty": 0.0,
+            "presence_penalty": 0.0
+        },
+        "default_embedding_model": {
+            "api_key": "==== REDACTED ====",
+            "auth_type": "api_key",
+            "type": "openai_embedding",
+            "model": "BAAI/bge-large-en-v1.5",
+            "encoding_model": "cl100k_base",
+            "api_base": "https://api.siliconflow.cn/v1",
+            "api_version": null,
+            "deployment_name": null,
+            "proxy": null,
+            "audience": null,
+            "model_supports_json": true,
+            "request_timeout": 180.0,
+            "tokens_per_minute": 0,
+            "requests_per_minute": 0,
+            "retry_strategy": "native",
+            "max_retries": 10,
+            "max_retry_wait": 10.0,
+            "concurrent_requests": 25,
+            "async_mode": "threaded",
+            "responses": null,
+            "max_tokens": null,
+            "temperature": 0,
+            "max_completion_tokens": null,
+            "reasoning_effort": null,
+            "top_p": 1,
+            "n": 1,
+            "frequency_penalty": 0.0,
+            "presence_penalty": 0.0
+        }
+    },
+    "input": {
+        "type": "file",
+        "file_type": "json",
+        "base_dir": "input",
+        "storage_account_blob_url": null,
+        "encoding": "utf-8",
+        "file_pattern": ".*\\.json$",
+        "file_filter": null,
+        "text_column": "text",
+        "title_column": null,
+        "metadata": null
+    },
+    "chunks": {
+        "size": 1200,
+        "overlap": 100,
+        "group_by_columns": [
+            "id"
+        ],
+        "strategy": "tokens",
+        "encoding_model": "cl100k_base",
+        "prepend_metadata": false,
+        "chunk_size_includes_metadata": false
+    },
+    "output": {
+        "type": "file",
+        "base_dir": "/home/hyz0906/study/neo4j_graph/output",
+        "storage_account_blob_url": null,
+        "cosmosdb_account_url": null
+    },
+    "outputs": null,
+    "update_index_output": {
+        "type": "file",
+        "base_dir": "/home/hyz0906/study/neo4j_graph/update_output",
+        "storage_account_blob_url": null,
+        "cosmosdb_account_url": null
+    },
+    "cache": {
+        "type": "file",
+        "base_dir": "cache",
+        "storage_account_blob_url": null,
+        "cosmosdb_account_url": null
+    },
+    "reporting": {
+        "type": "file",
+        "base_dir": "/home/hyz0906/study/neo4j_graph/logs",
+        "storage_account_blob_url": null
+    },
+    "vector_store": {
+        "default_vector_store": {
+            "type": "lancedb",
+            "db_uri": "/home/hyz0906/study/neo4j_graph/output/lancedb",
+            "url": null,
+            "audience": null,
+            "container_name": "==== REDACTED ====",
+            "database_name": null,
+            "overwrite": true
+        }
+    },
+    "workflows": null,
+    "embed_text": {
+        "model_id": "default_embedding_model",
+        "vector_store_id": "default_vector_store",
+        "batch_size": 16,
+        "batch_max_tokens": 8191,
+        "target": "required",
+        "names": [],
+        "strategy": null
+    },
+    "extract_graph": {
+        "model_id": "default_chat_model",
+        "prompt": "prompts/extract_graph.txt",
+        "entity_types": [
+            "organization",
+            "person",
+            "geo",
+            "event"
+        ],
+        "max_gleanings": 1,
+        "strategy": null
+    },
+    "summarize_descriptions": {
+        "model_id": "default_chat_model",
+        "prompt": "prompts/summarize_descriptions.txt",
+        "max_length": 500,
+        "max_input_tokens": 4000,
+        "strategy": null
+    },
+    "extract_graph_nlp": {
+        "normalize_edge_weights": true,
+        "text_analyzer": {
+            "extractor_type": "regex_english",
+            "model_name": "en_core_web_md",
+            "max_word_length": 15,
+            "word_delimiter": " ",
+            "include_named_entities": true,
+            "exclude_nouns": [
+                "stuff",
+                "thing",
+                "things",
+                "bunch",
+                "bit",
+                "bits",
+                "people",
+                "person",
+                "okay",
+                "hey",
+                "hi",
+                "hello",
+                "laughter",
+                "oh"
+            ],
+            "exclude_entity_tags": [
+                "DATE"
+            ],
+            "exclude_pos_tags": [
+                "DET",
+                "PRON",
+                "INTJ",
+                "X"
+            ],
+            "noun_phrase_tags": [
+                "PROPN",
+                "NOUNS"
+            ],
+            "noun_phrase_grammars": {
+                "PROPN,PROPN": "PROPN",
+                "NOUN,NOUN": "NOUNS",
+                "NOUNS,NOUN": "NOUNS",
+                "ADJ,ADJ": "ADJ",
+                "ADJ,NOUN": "NOUNS"
+            }
+        },
+        "concurrent_requests": 25
+    },
+    "prune_graph": {
+        "min_node_freq": 2,
+        "max_node_freq_std": null,
+        "min_node_degree": 1,
+        "max_node_degree_std": null,
+        "min_edge_weight_pct": 40.0,
+        "remove_ego_nodes": true,
+        "lcc_only": false
+    },
+    "cluster_graph": {
+        "max_cluster_size": 10,
+        "use_lcc": true,
+        "seed": 3735928559
+    },
+    "extract_claims": {
+        "enabled": false,
+        "model_id": "default_chat_model",
+        "prompt": "prompts/extract_claims.txt",
+        "description": "Any claims or facts that could be relevant to information discovery.",
+        "max_gleanings": 1,
+        "strategy": null
+    },
+    "community_reports": {
+        "model_id": "default_chat_model",
+        "graph_prompt": "prompts/community_report_graph.txt",
+        "text_prompt": "prompts/community_report_text.txt",
+        "max_length": 2000,
+        "max_input_length": 8000,
+        "strategy": null
+    },
+    "embed_graph": {
+        "enabled": false,
+        "dimensions": 1536,
+        "num_walks": 10,
+        "walk_length": 40,
+        "window_size": 2,
+        "iterations": 3,
+        "random_seed": 597832,
+        "use_lcc": true
+    },
+    "umap": {
+        "enabled": false
+    },
+    "snapshots": {
+        "embeddings": false,
+        "graphml": false,
+        "raw_graph": false
+    },
+    "local_search": {
+        "prompt": "prompts/local_search_system_prompt.txt",
+        "chat_model_id": "default_chat_model",
+        "embedding_model_id": "default_embedding_model",
+        "text_unit_prop": 0.5,
+        "community_prop": 0.15,
+        "conversation_history_max_turns": 5,
+        "top_k_entities": 10,
+        "top_k_relationships": 10,
+        "max_context_tokens": 12000
+    },
+    "global_search": {
+        "map_prompt": "prompts/global_search_map_system_prompt.txt",
+        "reduce_prompt": "prompts/global_search_reduce_system_prompt.txt",
+        "chat_model_id": "default_chat_model",
+        "knowledge_prompt": "prompts/global_search_knowledge_system_prompt.txt",
+        "max_context_tokens": 12000,
+        "data_max_tokens": 12000,
+        "map_max_length": 1000,
+        "reduce_max_length": 2000,
+        "dynamic_search_threshold": 1,
+        "dynamic_search_keep_parent": false,
+        "dynamic_search_num_repeats": 1,
+        "dynamic_search_use_summary": false,
+        "dynamic_search_max_level": 2
+    },
+    "drift_search": {
+        "prompt": "prompts/drift_search_system_prompt.txt",
+        "reduce_prompt": "prompts/drift_search_reduce_prompt.txt",
+        "chat_model_id": "default_chat_model",
+        "embedding_model_id": "default_embedding_model",
+        "data_max_tokens": 12000,
+        "reduce_max_tokens": null,
+        "reduce_temperature": 0,
+        "reduce_max_completion_tokens": null,
+        "concurrency": 32,
+        "drift_k_followups": 20,
+        "primer_folds": 5,
+        "primer_llm_max_tokens": 12000,
+        "n_depth": 3,
+        "local_search_text_unit_prop": 0.9,
+        "local_search_community_prop": 0.1,
+        "local_search_top_k_mapped_entities": 10,
+        "local_search_top_k_relationships": 10,
+        "local_search_max_data_tokens": 12000,
+        "local_search_temperature": 0,
+        "local_search_top_p": 1,
+        "local_search_n": 1,
+        "local_search_llm_max_gen_tokens": null,
+        "local_search_llm_max_gen_completion_tokens": null
+    },
+    "basic_search": {
+        "prompt": "prompts/basic_search_system_prompt.txt",
+        "chat_model_id": "default_chat_model",
+        "embedding_model_id": "default_embedding_model",
+        "k": 10,
+        "max_context_tokens": 12000
+    }
+}
+16:39:25,111 graphrag.storage.file_pipeline_storage INFO Creating file storage at /home/hyz0906/study/neo4j_graph/output
+16:39:25,111 graphrag.index.input.factory INFO loading input from root_dir=input
+16:39:25,111 graphrag.index.input.factory INFO using file storage for input
+16:39:25,113 graphrag.index.input.json INFO Loading json files from input
+16:39:25,113 graphrag.storage.file_pipeline_storage INFO search /home/hyz0906/study/neo4j_graph/input for files matching .*\.json$
+16:39:25,325 graphrag.index.input.util INFO Found 1 InputFileType.json files, loading 1
+16:39:25,469 graphrag.index.input.util INFO Total number of unfiltered InputFileType.json rows: 121
+16:39:26,338 graphrag.index.run.run_pipeline INFO Final # of rows loaded: 121
+16:39:26,579 graphrag.utils.storage INFO reading table from storage: documents.parquet
+16:39:26,830 graphrag.utils.storage INFO reading table from storage: documents.parquet
+16:39:26,834 graphrag.utils.storage INFO reading table from storage: text_units.parquet
+16:39:26,875 graphrag.utils.storage INFO reading table from storage: text_units.parquet
+16:39:28,540 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:39:28,544 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:39:28,557 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:39:28,570 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:39:28,629 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:39:28,711 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:39:28,980 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:39:28,999 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:39:29,4 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:39:29,279 graphrag.callbacks.file_workflow_callbacks INFO Error Invoking LLM details={'prompt': 'MANY entities and relationships were missed in the last extraction. Remember to ONLY emit entities that match any of the previously extracted types. Add them below using the same format:\n', 'kwargs': {'history': [], 'name': 'extract-continuation-0'}}
+16:39:29,279 graphrag.index.operations.extract_graph.graph_extractor ERROR error extracting graph
+Traceback (most recent call last):
+  File "/home/hyz0906/.local/lib/python3.12/site-packages/graphrag/cache/json_pipeline_cache.py", line 29, in get
+    data = json.loads(data)
+           ^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/json/__init__.py", line 346, in loads
+    return _default_decoder.decode(s)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/json/decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/json/decoder.py", line 355, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/hyz0906/.local/lib/python3.12/site-packages/graphrag/index/operations/extract_graph/graph_extractor.py", line 118, in __call__
+    result = await self._process_document(text, prompt_variables)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/hyz0906/.local/lib/python3.12/site-packages/graphrag/index/operations/extract_graph/graph_extractor.py", line 158, in _process_document
+    response = await self._model.achat(
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/hyz0906/.local/lib/python3.12/site-packages/graphrag/language_model/providers/fnllm/models.py", line 84, in achat
+    response = await self.model(prompt, history=history, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/hyz0906/.local/lib/python3.12/site-packages/fnllm/openai/llm/openai_chat_llm.py", line 94, in __call__
+    return await self._text_chat_llm(prompt, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/hyz0906/.local/lib/python3.12/site-packages/fnllm/openai/services/openai_tools_parsing.py", line 130, in __call__
+    return await self._delegate(prompt, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/hyz0906/.local/lib/python3.12/site-packages/fnllm/base/base_llm.py", line 144, in __call__
+    return await self._decorated_target(prompt, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/hyz0906/.local/lib/python3.12/site-packages/fnllm/base/services/json.py", line 78, in invoke
+    return await delegate(prompt, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/hyz0906/.local/lib/python3.12/site-packages/fnllm/base/services/cached.py", line 107, in invoke
+    cached = await self._cache.get(key)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/hyz0906/.local/lib/python3.12/site-packages/graphrag/language_model/providers/fnllm/cache.py", line 25, in get
+    return await self._cache.get(key)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/hyz0906/.local/lib/python3.12/site-packages/graphrag/cache/json_pipeline_cache.py", line 34, in get
+    await self._storage.delete(key)
+  File "/home/hyz0906/.local/lib/python3.12/site-packages/graphrag/storage/file_pipeline_storage.py", line 134, in delete
+    await remove(join_path(self._root_dir, key))
+  File "/home/hyz0906/.local/lib/python3.12/site-packages/aiofiles/ospath.py", line 14, in run
+    return await loop.run_in_executor(executor, pfunc)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/concurrent/futures/thread.py", line 58, in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/hyz0906/study/neo4j_graph/cache/extract_graph/chat_extract-continuation-0_63f484cee6a8ef206f6a6597d165757afaa78989ea7914efbd2e5080bccd8069_v2'
+16:39:29,284 graphrag.callbacks.file_workflow_callbacks INFO Entity Extraction Error details={'doc_index': 0, 'text': 'function ftell'}
+16:39:29,289 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:39:29,290 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:39:29,290 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:39:29,290 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:39:29,291 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:39:29,291 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:39:29,292 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:39:29,292 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:39:29,292 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:39:29,293 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:39:29,306 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:39:29,446 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:39:29,620 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:39:29,683 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:39:29,935 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:39:30,25 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:39:30,154 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:39:30,204 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:39:30,205 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:39:30,270 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:39:31,80 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:39:31,283 graphrag.utils.storage INFO reading table from storage: entities.parquet
+16:39:31,289 graphrag.utils.storage INFO reading table from storage: relationships.parquet
+16:39:31,348 graphrag.utils.storage INFO reading table from storage: entities.parquet
+16:39:31,352 graphrag.utils.storage INFO reading table from storage: relationships.parquet
+16:39:31,421 graphrag.utils.storage INFO reading table from storage: text_units.parquet
+16:39:31,424 graphrag.utils.storage INFO reading table from storage: entities.parquet
+16:39:31,428 graphrag.utils.storage INFO reading table from storage: relationships.parquet
+16:39:31,490 graphrag.utils.storage INFO reading table from storage: relationships.parquet
+16:39:31,494 graphrag.utils.storage INFO reading table from storage: entities.parquet
+16:39:31,498 graphrag.utils.storage INFO reading table from storage: communities.parquet
+16:39:31,540 graphrag.index.operations.summarize_communities.graph_context.context_builder INFO Number of nodes at level=0 => 4
+16:39:40,186 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:39:40,334 graphrag.utils.storage INFO reading table from storage: documents.parquet
+16:39:40,338 graphrag.utils.storage INFO reading table from storage: relationships.parquet
+16:39:40,343 graphrag.utils.storage INFO reading table from storage: text_units.parquet
+16:39:40,347 graphrag.utils.storage INFO reading table from storage: entities.parquet
+16:39:40,350 graphrag.utils.storage INFO reading table from storage: community_reports.parquet
+16:39:40,356 graphrag.index.workflows.generate_text_embeddings INFO Creating embeddings
+16:39:40,356 graphrag.index.operations.embed_text.embed_text INFO using vector store lancedb with container_name default for embedding entity.description: default-entity-description
+16:39:40,834 graphrag.index.operations.embed_text.strategies.openai INFO embedding 17 inputs via 17 snippets using 2 batches. max_batch_size=16, batch_max_tokens=8191
+16:39:41,854 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/embeddings "HTTP/1.1 200 OK"
+16:39:41,873 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/embeddings "HTTP/1.1 200 OK"
+16:39:42,574 graphrag.index.operations.embed_text.embed_text INFO using vector store lancedb with container_name default for embedding text_unit.text: default-text_unit-text
+16:39:42,579 graphrag.index.operations.embed_text.strategies.openai INFO embedding 121 inputs via 121 snippets using 8 batches. max_batch_size=16, batch_max_tokens=8191
+16:39:43,209 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/embeddings "HTTP/1.1 200 OK"
+16:39:43,241 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/embeddings "HTTP/1.1 200 OK"
+16:39:43,470 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/embeddings "HTTP/1.1 200 OK"
+16:39:43,482 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/embeddings "HTTP/1.1 200 OK"
+16:39:43,517 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/embeddings "HTTP/1.1 200 OK"
+16:39:43,518 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/embeddings "HTTP/1.1 200 OK"
+16:39:43,550 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/embeddings "HTTP/1.1 200 OK"
+16:39:46,853 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/embeddings "HTTP/1.1 200 OK"
+16:39:47,41 graphrag.index.operations.embed_text.embed_text INFO using vector store lancedb with container_name default for embedding community.full_content: default-community-full_content
+16:39:47,43 graphrag.index.operations.embed_text.strategies.openai INFO embedding 1 inputs via 1 snippets using 1 batches. max_batch_size=16, batch_max_tokens=8191
+16:39:47,473 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/embeddings "HTTP/1.1 413 Request Entity Too Large"
+16:39:47,520 graphrag.callbacks.file_workflow_callbacks INFO Error Invoking LLM details={'prompt': ['# C Programming Functions and Data Types\n\nThe community revolves around key entities in C programming, including functions like fread, fwrite, and fwrite_unlocked, and data types like size_t. These entities are interconnected through relationships that highlight their roles in file operations and memory management.\n\n## fread and fwrite as file operations\n\nfread and fwrite are fundamental functions in C used for reading and writing data to files, respectively. Their relationship with the data type size_t is crucial for specifying the number of bytes to read or write. These functions are essential for file handling and data management in C programs. [Data: Entities (3, 5); Relationships (1, 2)]\n\n## fwrite_unlocked and size_t\n\nfwrite_unlocked is a variant of fwrite that is not locked, and it also uses the data type size_t for its operations. This indicates that fwrite_unlocked is designed for performance-critical applications where locking is not necessary. The relationship between fwrite_unlocked and size_t is significant in understanding the performance implications of file operations in C. [Data: Entities (5, 7); Relationships (3)]\n\n## size_t as an unsigned integral type\n\nsize_t is an unsigned integral type used to represent the size of objects in bytes. It is a fundamental data type in C and C++ that ensures non-negative values, making it suitable for indexing and sizing operations in memory management and data structures. The significance of size_t lies in its role as a universal size representation across different platforms. [Data: Entities (4); Relationships (1, 2, 3)]\n\n## Interconnectedness of entities\n\nThe entities in this community are interconnected through relationships that highlight their roles in file operations and memory management. The relationship between fread, fwrite, and fwrite_unlocked with size_t demonstrates the importance of data types in defining the behavior of functions. This interconnectedness is essential for understanding the technical aspects of C programming. [Data: Entities (3, 5, 7); Relationships (1, 2, 3)]\n\n## Role of fread in file operations\n\nfread is a function used in C and C++ programming languages for reading data from a file. It uses the data type size_t to specify the number of bytes to read, making it a crucial function for file handling. The relationship between fread and size_t is significant in understanding the technical aspects of file operations in C. [Data: Entities (3, 4); Relationships (1)]'], 'kwargs': {}}
+16:39:47,520 graphrag.index.run.run_pipeline ERROR error running workflow generate_text_embeddings
+Traceback (most recent call last):
+  File "/home/hyz0906/.local/lib/python3.12/site-packages/graphrag/index/run/run_pipeline.py", line 143, in _run_pipeline
+    result = await workflow_function(config, context)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/hyz0906/.local/lib/python3.12/site-packages/graphrag/index/workflows/generate_text_embeddings.py", line 63, in run_workflow
+    output = await generate_text_embeddings(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/hyz0906/.local/lib/python3.12/site-packages/graphrag/index/workflows/generate_text_embeddings.py", line 154, in generate_text_embeddings
+    outputs[field] = await _run_and_snapshot_embeddings(
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/hyz0906/.local/lib/python3.12/site-packages/graphrag/index/workflows/generate_text_embeddings.py", line 173, in _run_and_snapshot_embeddings
+    data["embedding"] = await embed_text(
+                        ^^^^^^^^^^^^^^^^^
+  File "/home/hyz0906/.local/lib/python3.12/site-packages/graphrag/index/operations/embed_text/embed_text.py", line 59, in embed_text
+    return await _text_embed_with_vector_store(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/hyz0906/.local/lib/python3.12/site-packages/graphrag/index/operations/embed_text/embed_text.py", line 153, in _text_embed_with_vector_store
+    result = await strategy_exec(texts, callbacks, cache, strategy_config)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/hyz0906/.local/lib/python3.12/site-packages/graphrag/index/operations/embed_text/strategies/openai.py", line 68, in run
+    embeddings = await _execute(model, text_batches, ticker, semaphore)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/hyz0906/.local/lib/python3.12/site-packages/graphrag/index/operations/embed_text/strategies/openai.py", line 97, in _execute
+    results = await asyncio.gather(*futures)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/hyz0906/.local/lib/python3.12/site-packages/graphrag/index/operations/embed_text/strategies/openai.py", line 91, in embed
+    chunk_embeddings = await model.aembed_batch(chunk)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/hyz0906/.local/lib/python3.12/site-packages/graphrag/language_model/providers/fnllm/models.py", line 185, in aembed_batch
+    response = await self.model(text_list, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/hyz0906/.local/lib/python3.12/site-packages/fnllm/base/base_llm.py", line 144, in __call__
+    return await self._decorated_target(prompt, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/hyz0906/.local/lib/python3.12/site-packages/fnllm/base/services/cached.py", line 115, in invoke
+    result = await delegate(prompt, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/hyz0906/.local/lib/python3.12/site-packages/fnllm/base/services/rate_limiter.py", line 75, in invoke
+    result = await delegate(prompt, **args)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/hyz0906/.local/lib/python3.12/site-packages/fnllm/base/base_llm.py", line 126, in _decorator_target
+    output = await self._execute_llm(prompt, kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/hyz0906/.local/lib/python3.12/site-packages/fnllm/openai/llm/openai_embeddings_llm.py", line 126, in _execute_llm
+    result = await self._client.embeddings.create(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/hyz0906/.local/lib/python3.12/site-packages/openai/resources/embeddings.py", line 243, in create
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+  File "/home/hyz0906/.local/lib/python3.12/site-packages/openai/_base_client.py", line 1767, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/hyz0906/.local/lib/python3.12/site-packages/openai/_base_client.py", line 1461, in request
+    return await self._request(
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/home/hyz0906/.local/lib/python3.12/site-packages/openai/_base_client.py", line 1562, in _request
+    raise self._make_status_error_from_response(err.response) from None
+openai.APIStatusError: Error code: 413 - {'code': 20042, 'message': 'input must have less than 512 tokens', 'data': None}
+16:39:47,523 graphrag.callbacks.file_workflow_callbacks INFO Error running pipeline! details=None
+16:39:47,552 graphrag.cli.index ERROR Errors occurred during the pipeline run, see logs for more details.
+16:40:53,181 graphrag.cli.index INFO Logging enabled at /home/hyz0906/study/neo4j_graph/logs/indexing-engine.log
+16:40:54,809 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:40:59,382 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/embeddings "HTTP/1.1 200 OK"
+16:40:59,384 graphrag.cli.index INFO Starting pipeline run. dry_run=False
+16:40:59,384 graphrag.cli.index INFO Using default configuration: {
+    "root_dir": "/home/hyz0906/study/neo4j_graph",
+    "models": {
+        "default_chat_model": {
+            "api_key": "==== REDACTED ====",
+            "auth_type": "api_key",
+            "type": "openai_chat",
+            "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+            "encoding_model": "cl100k_base",
+            "api_base": "https://api.siliconflow.cn/v1",
+            "api_version": null,
+            "deployment_name": null,
+            "proxy": null,
+            "audience": null,
+            "model_supports_json": true,
+            "request_timeout": 180.0,
+            "tokens_per_minute": 0,
+            "requests_per_minute": 0,
+            "retry_strategy": "native",
+            "max_retries": 10,
+            "max_retry_wait": 10.0,
+            "concurrent_requests": 25,
+            "async_mode": "threaded",
+            "responses": null,
+            "max_tokens": null,
+            "temperature": 0,
+            "max_completion_tokens": null,
+            "reasoning_effort": null,
+            "top_p": 1,
+            "n": 1,
+            "frequency_penalty": 0.0,
+            "presence_penalty": 0.0
+        },
+        "default_embedding_model": {
+            "api_key": "==== REDACTED ====",
+            "auth_type": "api_key",
+            "type": "openai_embedding",
+            "model": "BAAI/bge-large-en-v1.5",
+            "encoding_model": "cl100k_base",
+            "api_base": "https://api.siliconflow.cn/v1",
+            "api_version": null,
+            "deployment_name": null,
+            "proxy": null,
+            "audience": null,
+            "model_supports_json": true,
+            "request_timeout": 180.0,
+            "tokens_per_minute": 0,
+            "requests_per_minute": 0,
+            "retry_strategy": "native",
+            "max_retries": 10,
+            "max_retry_wait": 10.0,
+            "concurrent_requests": 25,
+            "async_mode": "threaded",
+            "responses": null,
+            "max_tokens": null,
+            "temperature": 0,
+            "max_completion_tokens": null,
+            "reasoning_effort": null,
+            "top_p": 1,
+            "n": 1,
+            "frequency_penalty": 0.0,
+            "presence_penalty": 0.0
+        }
+    },
+    "input": {
+        "type": "file",
+        "file_type": "json",
+        "base_dir": "input",
+        "storage_account_blob_url": null,
+        "encoding": "utf-8",
+        "file_pattern": ".*\\.json$",
+        "file_filter": null,
+        "text_column": "text",
+        "title_column": null,
+        "metadata": null
+    },
+    "chunks": {
+        "size": 1200,
+        "overlap": 100,
+        "group_by_columns": [
+            "id"
+        ],
+        "strategy": "tokens",
+        "encoding_model": "cl100k_base",
+        "prepend_metadata": false,
+        "chunk_size_includes_metadata": false
+    },
+    "output": {
+        "type": "file",
+        "base_dir": "/home/hyz0906/study/neo4j_graph/output",
+        "storage_account_blob_url": null,
+        "cosmosdb_account_url": null
+    },
+    "outputs": null,
+    "update_index_output": {
+        "type": "file",
+        "base_dir": "/home/hyz0906/study/neo4j_graph/update_output",
+        "storage_account_blob_url": null,
+        "cosmosdb_account_url": null
+    },
+    "cache": {
+        "type": "file",
+        "base_dir": "cache",
+        "storage_account_blob_url": null,
+        "cosmosdb_account_url": null
+    },
+    "reporting": {
+        "type": "file",
+        "base_dir": "/home/hyz0906/study/neo4j_graph/logs",
+        "storage_account_blob_url": null
+    },
+    "vector_store": {
+        "default_vector_store": {
+            "type": "lancedb",
+            "db_uri": "/home/hyz0906/study/neo4j_graph/output/lancedb",
+            "url": null,
+            "audience": null,
+            "container_name": "==== REDACTED ====",
+            "database_name": null,
+            "overwrite": true
+        }
+    },
+    "workflows": null,
+    "embed_text": {
+        "model_id": "default_embedding_model",
+        "vector_store_id": "default_vector_store",
+        "batch_size": 16,
+        "batch_max_tokens": 8191,
+        "target": "required",
+        "names": [],
+        "strategy": null
+    },
+    "extract_graph": {
+        "model_id": "default_chat_model",
+        "prompt": "prompts/extract_graph.txt",
+        "entity_types": [
+            "organization",
+            "person",
+            "geo",
+            "event"
+        ],
+        "max_gleanings": 1,
+        "strategy": null
+    },
+    "summarize_descriptions": {
+        "model_id": "default_chat_model",
+        "prompt": "prompts/summarize_descriptions.txt",
+        "max_length": 500,
+        "max_input_tokens": 4000,
+        "strategy": null
+    },
+    "extract_graph_nlp": {
+        "normalize_edge_weights": true,
+        "text_analyzer": {
+            "extractor_type": "regex_english",
+            "model_name": "en_core_web_md",
+            "max_word_length": 15,
+            "word_delimiter": " ",
+            "include_named_entities": true,
+            "exclude_nouns": [
+                "stuff",
+                "thing",
+                "things",
+                "bunch",
+                "bit",
+                "bits",
+                "people",
+                "person",
+                "okay",
+                "hey",
+                "hi",
+                "hello",
+                "laughter",
+                "oh"
+            ],
+            "exclude_entity_tags": [
+                "DATE"
+            ],
+            "exclude_pos_tags": [
+                "DET",
+                "PRON",
+                "INTJ",
+                "X"
+            ],
+            "noun_phrase_tags": [
+                "PROPN",
+                "NOUNS"
+            ],
+            "noun_phrase_grammars": {
+                "PROPN,PROPN": "PROPN",
+                "NOUN,NOUN": "NOUNS",
+                "NOUNS,NOUN": "NOUNS",
+                "ADJ,ADJ": "ADJ",
+                "ADJ,NOUN": "NOUNS"
+            }
+        },
+        "concurrent_requests": 25
+    },
+    "prune_graph": {
+        "min_node_freq": 2,
+        "max_node_freq_std": null,
+        "min_node_degree": 1,
+        "max_node_degree_std": null,
+        "min_edge_weight_pct": 40.0,
+        "remove_ego_nodes": true,
+        "lcc_only": false
+    },
+    "cluster_graph": {
+        "max_cluster_size": 10,
+        "use_lcc": true,
+        "seed": 3735928559
+    },
+    "extract_claims": {
+        "enabled": false,
+        "model_id": "default_chat_model",
+        "prompt": "prompts/extract_claims.txt",
+        "description": "Any claims or facts that could be relevant to information discovery.",
+        "max_gleanings": 1,
+        "strategy": null
+    },
+    "community_reports": {
+        "model_id": "default_chat_model",
+        "graph_prompt": "prompts/community_report_graph.txt",
+        "text_prompt": "prompts/community_report_text.txt",
+        "max_length": 2000,
+        "max_input_length": 8000,
+        "strategy": null
+    },
+    "embed_graph": {
+        "enabled": false,
+        "dimensions": 1536,
+        "num_walks": 10,
+        "walk_length": 40,
+        "window_size": 2,
+        "iterations": 3,
+        "random_seed": 597832,
+        "use_lcc": true
+    },
+    "umap": {
+        "enabled": false
+    },
+    "snapshots": {
+        "embeddings": false,
+        "graphml": false,
+        "raw_graph": false
+    },
+    "local_search": {
+        "prompt": "prompts/local_search_system_prompt.txt",
+        "chat_model_id": "default_chat_model",
+        "embedding_model_id": "default_embedding_model",
+        "text_unit_prop": 0.5,
+        "community_prop": 0.15,
+        "conversation_history_max_turns": 5,
+        "top_k_entities": 10,
+        "top_k_relationships": 10,
+        "max_context_tokens": 12000
+    },
+    "global_search": {
+        "map_prompt": "prompts/global_search_map_system_prompt.txt",
+        "reduce_prompt": "prompts/global_search_reduce_system_prompt.txt",
+        "chat_model_id": "default_chat_model",
+        "knowledge_prompt": "prompts/global_search_knowledge_system_prompt.txt",
+        "max_context_tokens": 12000,
+        "data_max_tokens": 12000,
+        "map_max_length": 1000,
+        "reduce_max_length": 2000,
+        "dynamic_search_threshold": 1,
+        "dynamic_search_keep_parent": false,
+        "dynamic_search_num_repeats": 1,
+        "dynamic_search_use_summary": false,
+        "dynamic_search_max_level": 2
+    },
+    "drift_search": {
+        "prompt": "prompts/drift_search_system_prompt.txt",
+        "reduce_prompt": "prompts/drift_search_reduce_prompt.txt",
+        "chat_model_id": "default_chat_model",
+        "embedding_model_id": "default_embedding_model",
+        "data_max_tokens": 12000,
+        "reduce_max_tokens": null,
+        "reduce_temperature": 0,
+        "reduce_max_completion_tokens": null,
+        "concurrency": 32,
+        "drift_k_followups": 20,
+        "primer_folds": 5,
+        "primer_llm_max_tokens": 12000,
+        "n_depth": 3,
+        "local_search_text_unit_prop": 0.9,
+        "local_search_community_prop": 0.1,
+        "local_search_top_k_mapped_entities": 10,
+        "local_search_top_k_relationships": 10,
+        "local_search_max_data_tokens": 12000,
+        "local_search_temperature": 0,
+        "local_search_top_p": 1,
+        "local_search_n": 1,
+        "local_search_llm_max_gen_tokens": null,
+        "local_search_llm_max_gen_completion_tokens": null
+    },
+    "basic_search": {
+        "prompt": "prompts/basic_search_system_prompt.txt",
+        "chat_model_id": "default_chat_model",
+        "embedding_model_id": "default_embedding_model",
+        "k": 10,
+        "max_context_tokens": 12000
+    }
+}
+16:40:59,385 graphrag.storage.file_pipeline_storage INFO Creating file storage at /home/hyz0906/study/neo4j_graph/output
+16:40:59,385 graphrag.index.input.factory INFO loading input from root_dir=input
+16:40:59,385 graphrag.index.input.factory INFO using file storage for input
+16:40:59,387 graphrag.index.input.json INFO Loading json files from input
+16:40:59,387 graphrag.storage.file_pipeline_storage INFO search /home/hyz0906/study/neo4j_graph/input for files matching .*\.json$
+16:40:59,390 graphrag.index.input.util INFO Found 1 InputFileType.json files, loading 1
+16:40:59,391 graphrag.index.input.util INFO Total number of unfiltered InputFileType.json rows: 121
+16:40:59,393 graphrag.index.run.run_pipeline INFO Final # of rows loaded: 121
+16:40:59,401 graphrag.utils.storage INFO reading table from storage: documents.parquet
+16:40:59,544 graphrag.utils.storage INFO reading table from storage: documents.parquet
+16:40:59,548 graphrag.utils.storage INFO reading table from storage: text_units.parquet
+16:40:59,590 graphrag.utils.storage INFO reading table from storage: text_units.parquet
+16:41:00,181 graphrag.utils.storage INFO reading table from storage: entities.parquet
+16:41:00,184 graphrag.utils.storage INFO reading table from storage: relationships.parquet
+16:41:00,241 graphrag.utils.storage INFO reading table from storage: entities.parquet
+16:41:00,245 graphrag.utils.storage INFO reading table from storage: relationships.parquet
+16:41:00,305 graphrag.utils.storage INFO reading table from storage: text_units.parquet
+16:41:00,308 graphrag.utils.storage INFO reading table from storage: entities.parquet
+16:41:00,312 graphrag.utils.storage INFO reading table from storage: relationships.parquet
+16:41:00,369 graphrag.utils.storage INFO reading table from storage: relationships.parquet
+16:41:00,373 graphrag.utils.storage INFO reading table from storage: entities.parquet
+16:41:00,377 graphrag.utils.storage INFO reading table from storage: communities.parquet
+16:41:00,386 graphrag.index.operations.summarize_communities.graph_context.context_builder INFO Number of nodes at level=0 => 4
+16:41:00,538 graphrag.utils.storage INFO reading table from storage: documents.parquet
+16:41:00,542 graphrag.utils.storage INFO reading table from storage: relationships.parquet
+16:41:00,546 graphrag.utils.storage INFO reading table from storage: text_units.parquet
+16:41:00,550 graphrag.utils.storage INFO reading table from storage: entities.parquet
+16:41:00,554 graphrag.utils.storage INFO reading table from storage: community_reports.parquet
+16:41:00,560 graphrag.index.workflows.generate_text_embeddings INFO Creating embeddings
+16:41:00,560 graphrag.index.operations.embed_text.embed_text INFO using vector store lancedb with container_name default for embedding community.full_content: default-community-full_content
+16:41:00,633 graphrag.index.operations.embed_text.strategies.openai INFO embedding 1 inputs via 1 snippets using 1 batches. max_batch_size=16, batch_max_tokens=8191
+16:41:01,346 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/embeddings "HTTP/1.1 413 Request Entity Too Large"
+16:41:01,347 graphrag.callbacks.file_workflow_callbacks INFO Error Invoking LLM details={'prompt': ['# C Programming Functions and Data Types\n\nThe community revolves around key entities in C programming, including functions like fread, fwrite, and fwrite_unlocked, and data types like size_t. These entities are interconnected through relationships that highlight their roles in file operations and memory management.\n\n## fread and fwrite as file operations\n\nfread and fwrite are fundamental functions in C used for reading and writing data to files, respectively. Their relationship with the data type size_t is crucial for specifying the number of bytes to read or write. These functions are essential for file handling and data management in C programs. [Data: Entities (3, 5); Relationships (1, 2)]\n\n## fwrite_unlocked and size_t\n\nfwrite_unlocked is a variant of fwrite that is not locked, and it also uses the data type size_t for its operations. This indicates that fwrite_unlocked is designed for performance-critical applications where locking is not necessary. The relationship between fwrite_unlocked and size_t is significant in understanding the performance implications of file operations in C. [Data: Entities (5, 7); Relationships (3)]\n\n## size_t as an unsigned integral type\n\nsize_t is an unsigned integral type used to represent the size of objects in bytes. It is a fundamental data type in C and C++ that ensures non-negative values, making it suitable for indexing and sizing operations in memory management and data structures. The significance of size_t lies in its role as a universal size representation across different platforms. [Data: Entities (4); Relationships (1, 2, 3)]\n\n## Interconnectedness of entities\n\nThe entities in this community are interconnected through relationships that highlight their roles in file operations and memory management. The relationship between fread, fwrite, and fwrite_unlocked with size_t demonstrates the importance of data types in defining the behavior of functions. This interconnectedness is essential for understanding the technical aspects of C programming. [Data: Entities (3, 5, 7); Relationships (1, 2, 3)]\n\n## Role of fread in file operations\n\nfread is a function used in C and C++ programming languages for reading data from a file. It uses the data type size_t to specify the number of bytes to read, making it a crucial function for file handling. The relationship between fread and size_t is significant in understanding the technical aspects of file operations in C. [Data: Entities (3, 4); Relationships (1)]'], 'kwargs': {}}
+16:41:01,347 graphrag.index.run.run_pipeline ERROR error running workflow generate_text_embeddings
+Traceback (most recent call last):
+  File "/home/hyz0906/.local/lib/python3.12/site-packages/graphrag/index/run/run_pipeline.py", line 143, in _run_pipeline
+    result = await workflow_function(config, context)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/hyz0906/.local/lib/python3.12/site-packages/graphrag/index/workflows/generate_text_embeddings.py", line 63, in run_workflow
+    output = await generate_text_embeddings(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/hyz0906/.local/lib/python3.12/site-packages/graphrag/index/workflows/generate_text_embeddings.py", line 154, in generate_text_embeddings
+    outputs[field] = await _run_and_snapshot_embeddings(
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/hyz0906/.local/lib/python3.12/site-packages/graphrag/index/workflows/generate_text_embeddings.py", line 173, in _run_and_snapshot_embeddings
+    data["embedding"] = await embed_text(
+                        ^^^^^^^^^^^^^^^^^
+  File "/home/hyz0906/.local/lib/python3.12/site-packages/graphrag/index/operations/embed_text/embed_text.py", line 59, in embed_text
+    return await _text_embed_with_vector_store(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/hyz0906/.local/lib/python3.12/site-packages/graphrag/index/operations/embed_text/embed_text.py", line 153, in _text_embed_with_vector_store
+    result = await strategy_exec(texts, callbacks, cache, strategy_config)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/hyz0906/.local/lib/python3.12/site-packages/graphrag/index/operations/embed_text/strategies/openai.py", line 68, in run
+    embeddings = await _execute(model, text_batches, ticker, semaphore)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/hyz0906/.local/lib/python3.12/site-packages/graphrag/index/operations/embed_text/strategies/openai.py", line 97, in _execute
+    results = await asyncio.gather(*futures)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/hyz0906/.local/lib/python3.12/site-packages/graphrag/index/operations/embed_text/strategies/openai.py", line 91, in embed
+    chunk_embeddings = await model.aembed_batch(chunk)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/hyz0906/.local/lib/python3.12/site-packages/graphrag/language_model/providers/fnllm/models.py", line 185, in aembed_batch
+    response = await self.model(text_list, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/hyz0906/.local/lib/python3.12/site-packages/fnllm/base/base_llm.py", line 144, in __call__
+    return await self._decorated_target(prompt, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/hyz0906/.local/lib/python3.12/site-packages/fnllm/base/services/cached.py", line 115, in invoke
+    result = await delegate(prompt, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/hyz0906/.local/lib/python3.12/site-packages/fnllm/base/services/rate_limiter.py", line 75, in invoke
+    result = await delegate(prompt, **args)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/hyz0906/.local/lib/python3.12/site-packages/fnllm/base/base_llm.py", line 126, in _decorator_target
+    output = await self._execute_llm(prompt, kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/hyz0906/.local/lib/python3.12/site-packages/fnllm/openai/llm/openai_embeddings_llm.py", line 126, in _execute_llm
+    result = await self._client.embeddings.create(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/hyz0906/.local/lib/python3.12/site-packages/openai/resources/embeddings.py", line 243, in create
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+  File "/home/hyz0906/.local/lib/python3.12/site-packages/openai/_base_client.py", line 1767, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/hyz0906/.local/lib/python3.12/site-packages/openai/_base_client.py", line 1461, in request
+    return await self._request(
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/home/hyz0906/.local/lib/python3.12/site-packages/openai/_base_client.py", line 1562, in _request
+    raise self._make_status_error_from_response(err.response) from None
+openai.APIStatusError: Error code: 413 - {'code': 20042, 'message': 'input must have less than 512 tokens', 'data': None}
+16:41:01,349 graphrag.callbacks.file_workflow_callbacks INFO Error running pipeline! details=None
+16:41:01,375 graphrag.cli.index ERROR Errors occurred during the pipeline run, see logs for more details.
+16:47:29,689 graphrag.cli.index INFO Logging enabled at /home/hyz0906/study/neo4j_graph/logs/indexing-engine.log
+16:47:31,48 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+16:47:36,419 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/embeddings "HTTP/1.1 200 OK"
+16:47:36,425 graphrag.cli.index INFO Starting pipeline run. dry_run=False
+16:47:36,426 graphrag.cli.index INFO Using default configuration: {
+    "root_dir": "/home/hyz0906/study/neo4j_graph",
+    "models": {
+        "default_chat_model": {
+            "api_key": "==== REDACTED ====",
+            "auth_type": "api_key",
+            "type": "openai_chat",
+            "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+            "encoding_model": "cl100k_base",
+            "api_base": "https://api.siliconflow.cn/v1",
+            "api_version": null,
+            "deployment_name": null,
+            "proxy": null,
+            "audience": null,
+            "model_supports_json": true,
+            "request_timeout": 180.0,
+            "tokens_per_minute": 0,
+            "requests_per_minute": 0,
+            "retry_strategy": "native",
+            "max_retries": 10,
+            "max_retry_wait": 10.0,
+            "concurrent_requests": 25,
+            "async_mode": "threaded",
+            "responses": null,
+            "max_tokens": null,
+            "temperature": 0,
+            "max_completion_tokens": null,
+            "reasoning_effort": null,
+            "top_p": 1,
+            "n": 1,
+            "frequency_penalty": 0.0,
+            "presence_penalty": 0.0
+        },
+        "default_embedding_model": {
+            "api_key": "==== REDACTED ====",
+            "auth_type": "api_key",
+            "type": "openai_embedding",
+            "model": "BAAI/bge-large-en-v1.5",
+            "encoding_model": "cl100k_base",
+            "api_base": "https://api.siliconflow.cn/v1",
+            "api_version": null,
+            "deployment_name": null,
+            "proxy": null,
+            "audience": null,
+            "model_supports_json": true,
+            "request_timeout": 180.0,
+            "tokens_per_minute": 0,
+            "requests_per_minute": 0,
+            "retry_strategy": "native",
+            "max_retries": 10,
+            "max_retry_wait": 10.0,
+            "concurrent_requests": 25,
+            "async_mode": "threaded",
+            "responses": null,
+            "max_tokens": null,
+            "temperature": 0,
+            "max_completion_tokens": null,
+            "reasoning_effort": null,
+            "top_p": 1,
+            "n": 1,
+            "frequency_penalty": 0.0,
+            "presence_penalty": 0.0
+        }
+    },
+    "input": {
+        "type": "file",
+        "file_type": "json",
+        "base_dir": "input",
+        "storage_account_blob_url": null,
+        "encoding": "utf-8",
+        "file_pattern": ".*\\.json$",
+        "file_filter": null,
+        "text_column": "text",
+        "title_column": null,
+        "metadata": null
+    },
+    "chunks": {
+        "size": 1200,
+        "overlap": 100,
+        "group_by_columns": [
+            "id"
+        ],
+        "strategy": "tokens",
+        "encoding_model": "cl100k_base",
+        "prepend_metadata": false,
+        "chunk_size_includes_metadata": false
+    },
+    "output": {
+        "type": "file",
+        "base_dir": "/home/hyz0906/study/neo4j_graph/output",
+        "storage_account_blob_url": null,
+        "cosmosdb_account_url": null
+    },
+    "outputs": null,
+    "update_index_output": {
+        "type": "file",
+        "base_dir": "/home/hyz0906/study/neo4j_graph/update_output",
+        "storage_account_blob_url": null,
+        "cosmosdb_account_url": null
+    },
+    "cache": {
+        "type": "file",
+        "base_dir": "cache",
+        "storage_account_blob_url": null,
+        "cosmosdb_account_url": null
+    },
+    "reporting": {
+        "type": "file",
+        "base_dir": "/home/hyz0906/study/neo4j_graph/logs",
+        "storage_account_blob_url": null
+    },
+    "vector_store": {
+        "default_vector_store": {
+            "type": "lancedb",
+            "db_uri": "/home/hyz0906/study/neo4j_graph/output/lancedb",
+            "url": null,
+            "audience": null,
+            "container_name": "==== REDACTED ====",
+            "database_name": null,
+            "overwrite": true
+        }
+    },
+    "workflows": null,
+    "embed_text": {
+        "model_id": "default_embedding_model",
+        "vector_store_id": "default_vector_store",
+        "batch_size": 16,
+        "batch_max_tokens": 8191,
+        "target": "required",
+        "names": [],
+        "strategy": null
+    },
+    "extract_graph": {
+        "model_id": "default_chat_model",
+        "prompt": "prompts/extract_graph.txt",
+        "entity_types": [
+            "organization",
+            "person",
+            "geo",
+            "event"
+        ],
+        "max_gleanings": 1,
+        "strategy": null
+    },
+    "summarize_descriptions": {
+        "model_id": "default_chat_model",
+        "prompt": "prompts/summarize_descriptions.txt",
+        "max_length": 500,
+        "max_input_tokens": 4000,
+        "strategy": null
+    },
+    "extract_graph_nlp": {
+        "normalize_edge_weights": true,
+        "text_analyzer": {
+            "extractor_type": "regex_english",
+            "model_name": "en_core_web_md",
+            "max_word_length": 15,
+            "word_delimiter": " ",
+            "include_named_entities": true,
+            "exclude_nouns": [
+                "stuff",
+                "thing",
+                "things",
+                "bunch",
+                "bit",
+                "bits",
+                "people",
+                "person",
+                "okay",
+                "hey",
+                "hi",
+                "hello",
+                "laughter",
+                "oh"
+            ],
+            "exclude_entity_tags": [
+                "DATE"
+            ],
+            "exclude_pos_tags": [
+                "DET",
+                "PRON",
+                "INTJ",
+                "X"
+            ],
+            "noun_phrase_tags": [
+                "PROPN",
+                "NOUNS"
+            ],
+            "noun_phrase_grammars": {
+                "PROPN,PROPN": "PROPN",
+                "NOUN,NOUN": "NOUNS",
+                "NOUNS,NOUN": "NOUNS",
+                "ADJ,ADJ": "ADJ",
+                "ADJ,NOUN": "NOUNS"
+            }
+        },
+        "concurrent_requests": 25
+    },
+    "prune_graph": {
+        "min_node_freq": 2,
+        "max_node_freq_std": null,
+        "min_node_degree": 1,
+        "max_node_degree_std": null,
+        "min_edge_weight_pct": 40.0,
+        "remove_ego_nodes": true,
+        "lcc_only": false
+    },
+    "cluster_graph": {
+        "max_cluster_size": 10,
+        "use_lcc": true,
+        "seed": 3735928559
+    },
+    "extract_claims": {
+        "enabled": false,
+        "model_id": "default_chat_model",
+        "prompt": "prompts/extract_claims.txt",
+        "description": "Any claims or facts that could be relevant to information discovery.",
+        "max_gleanings": 1,
+        "strategy": null
+    },
+    "community_reports": {
+        "model_id": "default_chat_model",
+        "graph_prompt": "prompts/community_report_graph.txt",
+        "text_prompt": "prompts/community_report_text.txt",
+        "max_length": 2000,
+        "max_input_length": 8000,
+        "strategy": null
+    },
+    "embed_graph": {
+        "enabled": false,
+        "dimensions": 1536,
+        "num_walks": 10,
+        "walk_length": 40,
+        "window_size": 2,
+        "iterations": 3,
+        "random_seed": 597832,
+        "use_lcc": true
+    },
+    "umap": {
+        "enabled": false
+    },
+    "snapshots": {
+        "embeddings": false,
+        "graphml": false,
+        "raw_graph": false
+    },
+    "local_search": {
+        "prompt": "prompts/local_search_system_prompt.txt",
+        "chat_model_id": "default_chat_model",
+        "embedding_model_id": "default_embedding_model",
+        "text_unit_prop": 0.5,
+        "community_prop": 0.15,
+        "conversation_history_max_turns": 5,
+        "top_k_entities": 10,
+        "top_k_relationships": 10,
+        "max_context_tokens": 12000
+    },
+    "global_search": {
+        "map_prompt": "prompts/global_search_map_system_prompt.txt",
+        "reduce_prompt": "prompts/global_search_reduce_system_prompt.txt",
+        "chat_model_id": "default_chat_model",
+        "knowledge_prompt": "prompts/global_search_knowledge_system_prompt.txt",
+        "max_context_tokens": 12000,
+        "data_max_tokens": 12000,
+        "map_max_length": 1000,
+        "reduce_max_length": 2000,
+        "dynamic_search_threshold": 1,
+        "dynamic_search_keep_parent": false,
+        "dynamic_search_num_repeats": 1,
+        "dynamic_search_use_summary": false,
+        "dynamic_search_max_level": 2
+    },
+    "drift_search": {
+        "prompt": "prompts/drift_search_system_prompt.txt",
+        "reduce_prompt": "prompts/drift_search_reduce_prompt.txt",
+        "chat_model_id": "default_chat_model",
+        "embedding_model_id": "default_embedding_model",
+        "data_max_tokens": 12000,
+        "reduce_max_tokens": null,
+        "reduce_temperature": 0,
+        "reduce_max_completion_tokens": null,
+        "concurrency": 32,
+        "drift_k_followups": 20,
+        "primer_folds": 5,
+        "primer_llm_max_tokens": 12000,
+        "n_depth": 3,
+        "local_search_text_unit_prop": 0.9,
+        "local_search_community_prop": 0.1,
+        "local_search_top_k_mapped_entities": 10,
+        "local_search_top_k_relationships": 10,
+        "local_search_max_data_tokens": 12000,
+        "local_search_temperature": 0,
+        "local_search_top_p": 1,
+        "local_search_n": 1,
+        "local_search_llm_max_gen_tokens": null,
+        "local_search_llm_max_gen_completion_tokens": null
+    },
+    "basic_search": {
+        "prompt": "prompts/basic_search_system_prompt.txt",
+        "chat_model_id": "default_chat_model",
+        "embedding_model_id": "default_embedding_model",
+        "k": 10,
+        "max_context_tokens": 12000
+    }
+}
+16:47:36,426 graphrag.storage.file_pipeline_storage INFO Creating file storage at /home/hyz0906/study/neo4j_graph/output
+16:47:36,427 graphrag.index.input.factory INFO loading input from root_dir=input
+16:47:36,427 graphrag.index.input.factory INFO using file storage for input
+16:47:36,432 graphrag.index.input.json INFO Loading json files from input
+16:47:36,432 graphrag.storage.file_pipeline_storage INFO search /home/hyz0906/study/neo4j_graph/input for files matching .*\.json$
+16:47:36,440 graphrag.index.input.util INFO Found 1 InputFileType.json files, loading 1
+16:47:36,440 graphrag.index.input.util INFO Total number of unfiltered InputFileType.json rows: 121
+16:47:36,445 graphrag.index.run.run_pipeline INFO Final # of rows loaded: 121
+16:47:36,456 graphrag.utils.storage INFO reading table from storage: documents.parquet
+16:47:36,602 graphrag.utils.storage INFO reading table from storage: documents.parquet
+16:47:36,606 graphrag.utils.storage INFO reading table from storage: text_units.parquet
+16:47:36,645 graphrag.utils.storage INFO reading table from storage: text_units.parquet
+16:47:37,191 graphrag.utils.storage INFO reading table from storage: entities.parquet
+16:47:37,195 graphrag.utils.storage INFO reading table from storage: relationships.parquet
+16:47:37,251 graphrag.utils.storage INFO reading table from storage: entities.parquet
+16:47:37,254 graphrag.utils.storage INFO reading table from storage: relationships.parquet
+16:47:37,321 graphrag.utils.storage INFO reading table from storage: text_units.parquet
+16:47:37,325 graphrag.utils.storage INFO reading table from storage: entities.parquet
+16:47:37,328 graphrag.utils.storage INFO reading table from storage: relationships.parquet
+16:47:37,387 graphrag.utils.storage INFO reading table from storage: relationships.parquet
+16:47:37,391 graphrag.utils.storage INFO reading table from storage: entities.parquet
+16:47:37,394 graphrag.utils.storage INFO reading table from storage: communities.parquet
+16:47:37,404 graphrag.index.operations.summarize_communities.graph_context.context_builder INFO Number of nodes at level=0 => 4
+16:47:37,553 graphrag.utils.storage INFO reading table from storage: documents.parquet
+16:47:37,557 graphrag.utils.storage INFO reading table from storage: relationships.parquet
+16:47:37,561 graphrag.utils.storage INFO reading table from storage: text_units.parquet
+16:47:37,565 graphrag.utils.storage INFO reading table from storage: entities.parquet
+16:47:37,569 graphrag.utils.storage INFO reading table from storage: community_reports.parquet
+16:47:37,575 graphrag.index.workflows.generate_text_embeddings INFO Creating embeddings
+16:47:37,575 graphrag.index.operations.embed_text.embed_text INFO using vector store lancedb with container_name default for embedding community.full_content: default-community-full_content
+16:47:37,644 graphrag.index.operations.embed_text.strategies.openai INFO embedding 1 inputs via 1 snippets using 1 batches. max_batch_size=16, batch_max_tokens=8191
+16:47:38,441 httpx INFO HTTP Request: POST https://api.siliconflow.cn/v1/embeddings "HTTP/1.1 413 Request Entity Too Large"
+16:47:38,444 graphrag.callbacks.file_workflow_callbacks INFO Error Invoking LLM details={'prompt': ['# C Programming Functions and Data Types\n\nThe community revolves around key entities in C programming, including functions like fread, fwrite, and fwrite_unlocked, and data types like size_t. These entities are interconnected through relationships that highlight their roles in file operations and memory management.\n\n## fread and fwrite as file operations\n\nfread and fwrite are fundamental functions in C used for reading and writing data to files, respectively. Their relationship with the data type size_t is crucial for specifying the number of bytes to read or write. These functions are essential for file handling and data management in C programs. [Data: Entities (3, 5); Relationships (1, 2)]\n\n## fwrite_unlocked and size_t\n\nfwrite_unlocked is a variant of fwrite that is not locked, and it also uses the data type size_t for its operations. This indicates that fwrite_unlocked is designed for performance-critical applications where locking is not necessary. The relationship between fwrite_unlocked and size_t is significant in understanding the performance implications of file operations in C. [Data: Entities (5, 7); Relationships (3)]\n\n## size_t as an unsigned integral type\n\nsize_t is an unsigned integral type used to represent the size of objects in bytes. It is a fundamental data type in C and C++ that ensures non-negative values, making it suitable for indexing and sizing operations in memory management and data structures. The significance of size_t lies in its role as a universal size representation across different platforms. [Data: Entities (4); Relationships (1, 2, 3)]\n\n## Interconnectedness of entities\n\nThe entities in this community are interconnected through relationships that highlight their roles in file operations and memory management. The relationship between fread, fwrite, and fwrite_unlocked with size_t demonstrates the importance of data types in defining the behavior of functions. This interconnectedness is essential for understanding the technical aspects of C programming. [Data: Entities (3, 5, 7); Relationships (1, 2, 3)]\n\n## Role of fread in file operations\n\nfread is a function used in C and C++ programming languages for reading data from a file. It uses the data type size_t to specify the number of bytes to read, making it a crucial function for file handling. The relationship between fread and size_t is significant in understanding the technical aspects of file operations in C. [Data: Entities (3, 4); Relationships (1)]'], 'kwargs': {}}
+16:47:38,444 graphrag.index.run.run_pipeline ERROR error running workflow generate_text_embeddings
+Traceback (most recent call last):
+  File "/home/hyz0906/.local/lib/python3.12/site-packages/graphrag/index/run/run_pipeline.py", line 143, in _run_pipeline
+    result = await workflow_function(config, context)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/hyz0906/.local/lib/python3.12/site-packages/graphrag/index/workflows/generate_text_embeddings.py", line 63, in run_workflow
+    output = await generate_text_embeddings(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/hyz0906/.local/lib/python3.12/site-packages/graphrag/index/workflows/generate_text_embeddings.py", line 154, in generate_text_embeddings
+    outputs[field] = await _run_and_snapshot_embeddings(
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/hyz0906/.local/lib/python3.12/site-packages/graphrag/index/workflows/generate_text_embeddings.py", line 173, in _run_and_snapshot_embeddings
+    data["embedding"] = await embed_text(
+                        ^^^^^^^^^^^^^^^^^
+  File "/home/hyz0906/.local/lib/python3.12/site-packages/graphrag/index/operations/embed_text/embed_text.py", line 59, in embed_text
+    return await _text_embed_with_vector_store(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/hyz0906/.local/lib/python3.12/site-packages/graphrag/index/operations/embed_text/embed_text.py", line 153, in _text_embed_with_vector_store
+    result = await strategy_exec(texts, callbacks, cache, strategy_config)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/hyz0906/.local/lib/python3.12/site-packages/graphrag/index/operations/embed_text/strategies/openai.py", line 68, in run
+    embeddings = await _execute(model, text_batches, ticker, semaphore)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/hyz0906/.local/lib/python3.12/site-packages/graphrag/index/operations/embed_text/strategies/openai.py", line 97, in _execute
+    results = await asyncio.gather(*futures)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/hyz0906/.local/lib/python3.12/site-packages/graphrag/index/operations/embed_text/strategies/openai.py", line 91, in embed
+    chunk_embeddings = await model.aembed_batch(chunk)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/hyz0906/.local/lib/python3.12/site-packages/graphrag/language_model/providers/fnllm/models.py", line 185, in aembed_batch
+    response = await self.model(text_list, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/hyz0906/.local/lib/python3.12/site-packages/fnllm/base/base_llm.py", line 144, in __call__
+    return await self._decorated_target(prompt, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/hyz0906/.local/lib/python3.12/site-packages/fnllm/base/services/cached.py", line 115, in invoke
+    result = await delegate(prompt, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/hyz0906/.local/lib/python3.12/site-packages/fnllm/base/services/rate_limiter.py", line 75, in invoke
+    result = await delegate(prompt, **args)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/hyz0906/.local/lib/python3.12/site-packages/fnllm/base/base_llm.py", line 126, in _decorator_target
+    output = await self._execute_llm(prompt, kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/hyz0906/.local/lib/python3.12/site-packages/fnllm/openai/llm/openai_embeddings_llm.py", line 126, in _execute_llm
+    result = await self._client.embeddings.create(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/hyz0906/.local/lib/python3.12/site-packages/openai/resources/embeddings.py", line 243, in create
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+  File "/home/hyz0906/.local/lib/python3.12/site-packages/openai/_base_client.py", line 1767, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/hyz0906/.local/lib/python3.12/site-packages/openai/_base_client.py", line 1461, in request
+    return await self._request(
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/home/hyz0906/.local/lib/python3.12/site-packages/openai/_base_client.py", line 1562, in _request
+    raise self._make_status_error_from_response(err.response) from None
+openai.APIStatusError: Error code: 413 - {'code': 20042, 'message': 'input must have less than 512 tokens', 'data': None}
+16:47:38,446 graphrag.callbacks.file_workflow_callbacks INFO Error running pipeline! details=None
+16:47:38,473 graphrag.cli.index ERROR Errors occurred during the pipeline run, see logs for more details.

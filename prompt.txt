@@ -1,0 +1,10 @@
+“generate a simple C project with makefile could generate compilation database, and a Python program that builds a code knowledge graph for a C/C++ project. It should:
+Load a Clang compilation database (compile_commands.json).
+Use the clang.cindex Python bindings (libclang) to parse each source file and walk its AST.
+Extract relationships: function calls (CALL_EXPR), class inheritance (CXX_BASE_SPECIFIER), type references (TYPE_REF), and header includes (get_includes()).
+Store nodes (functions, classes, types) and edges (calls, inherits, uses, includes) in a structured graph data model.
+Serialize the graph to a JSON file.
+Install and initialize GraphRAG (pip install graphrag; graphrag init --root ...), place the JSON in the input folder, and configure settings.yaml to recognize the JSON schema.
+Run graphrag index to ingest the JSON graph into GraphRAG.
+Configure a local LLM (OpenAI-compatible API) in .env or settings.yaml.
+Show how to query the GraphRAG index via the CLI or Python (e.g. graphrag query --method local --query \"...\").
