@@ -186,6 +186,11 @@ class CodeKnowledgeGraphBuilder:
         if not cursor_data["location"]["is_project_file"]:
             return False
         
+        # Skip entities from system include directories
+        file_path = cursor_data["location"]["file"]
+        if file_path.startswith("/usr/include"):
+            return False
+        
         # Skip common system names and symbols
         if cursor_data["spelling"].startswith(('_', '__')):
             return False
@@ -232,72 +237,66 @@ class CodeKnowledgeGraphBuilder:
         
         # Process declarations - focus only on the main ones we care about
         if kind == "FUNCTION_DECL":
-            # For the demo project we care about greet, main, and add functions
-            if cursor_data["spelling"] in ["greet", "main", "add"]:
-                # Create function node (for both declarations and definitions)
-                node_id = self._get_node_id("function", cursor_data["spelling"])
-                
-                # Link function to its file (as defines for definitions, declares for declarations)
-                if file_id is not None:
-                    if cursor_data["is_definition"]:
-                        self._add_edge(file_id, node_id, "defines")
-                    else:
-                        self._add_edge(file_id, node_id, "declares")
-                
-                # Process return type
-                if "result_type" in cursor_data:
-                    return_type_id = self._get_node_id("type", cursor_data["result_type"])
-                    self._add_edge(node_id, return_type_id, "returns")
+            # Create function node (for both declarations and definitions)
+            node_id = self._get_node_id("function", cursor_data["spelling"])
+            
+            # Link function to its file (as defines for definitions, declares for declarations)
+            if file_id is not None:
+                if cursor_data["is_definition"]:
+                    self._add_edge(file_id, node_id, "defines")
+                else:
+                    self._add_edge(file_id, node_id, "declares")
+            
+            # Process return type
+            if "result_type" in cursor_data:
+                return_type_id = self._get_node_id("type", cursor_data["result_type"])
+                self._add_edge(node_id, return_type_id, "returns")
         
         elif kind == "STRUCT_DECL":
-            # For the demo project we only care about Person struct
-            if cursor_data["spelling"] == "Person":
-                # Create struct node
-                node_id = self._get_node_id("struct", cursor_data["spelling"])
-                
-                # Link struct to its file
-                if file_id is not None:
-                    if cursor_data["is_definition"]:
-                        self._add_edge(file_id, node_id, "defines")
-                    else:
-                        self._add_edge(file_id, node_id, "declares")
+            # Create struct node
+            node_id = self._get_node_id("struct", cursor_data["spelling"])
+            
+            # Link struct to its file
+            if file_id is not None:
+                if cursor_data["is_definition"]:
+                    self._add_edge(file_id, node_id, "defines")
+                else:
+                    self._add_edge(file_id, node_id, "declares")
         
         elif kind == "VAR_DECL":
-            # For the demo project we only care about specific variables (sum)
-            if cursor_data["spelling"] in ["sum"]:
-                # Create variable node
-                node_id = self._get_node_id("variable", cursor_data["spelling"])
-                
-                # Link variable to its file
-                if file_id is not None:
-                    self._add_edge(file_id, node_id, "defines")
-                
-                # Process variable type
-                if "type" in cursor_data:
-                    type_id = self._get_node_id("type", cursor_data["type"])
-                    self._add_edge(node_id, type_id, "has_type")
+            # Create variable node
+            node_id = self._get_node_id("variable", cursor_data["spelling"])
+            
+            # Link variable to its file
+            if file_id is not None:
+                self._add_edge(file_id, node_id, "defines")
+            
+            # Process variable type
+            if "type" in cursor_data:
+                type_id = self._get_node_id("type", cursor_data["type"])
+                self._add_edge(node_id, type_id, "has_type")
         
         elif kind == "FIELD_DECL":
-            # For the demo project we care about Person fields (name, age)
-            if cursor_data["spelling"] in ["name", "age"]:
-                # Create field node
-                node_id = self._get_node_id("field", cursor_data["spelling"])
-                
-                # Look for parent struct/class
-                if cursor_data["parent_id"]:
-                    # Find parent in the AST data
-                    for file_ast in self.ast_data.values():
-                        parent = self._find_node_by_id(file_ast, cursor_data["parent_id"])
-                        if parent and parent["kind"] == "STRUCT_DECL" and parent["spelling"] == "Person":
-                            parent_id = self._get_node_id("struct", parent["spelling"])
-                            self._add_edge(parent_id, node_id, "has_field")
-                            break
+            # Create field node
+            node_id = self._get_node_id("field", cursor_data["spelling"])
+            
+            # Look for parent struct/class
+            if cursor_data["parent_id"]:
+                # Find parent in the AST data
+                for file_ast in self.ast_data.values():
+                    parent = self._find_node_by_id(file_ast, cursor_data["parent_id"])
+                    if parent and parent["kind"] == "STRUCT_DECL":
+                        parent_id = self._get_node_id("struct", parent["spelling"])
+                        self._add_edge(parent_id, node_id, "has_field")
+                        break
         
         # Process includes - only care about "utils.h"
         elif kind == "INCLUSION_DIRECTIVE":
-            if file_id is not None and cursor_data["spelling"] == "utils.h":
-                included_id = self._get_node_id("file", cursor_data["spelling"])
-                self._add_edge(file_id, included_id, "includes")
+            if file_id is not None and cursor_data["spelling"]:
+                # Only include project headers, not system headers with angle brackets
+                if not cursor_data["spelling"].startswith('<') and not cursor_data["spelling"].startswith('/usr/include'):
+                    included_id = self._get_node_id("file", cursor_data["spelling"])
+                    self._add_edge(file_id, included_id, "includes")
         
         # Process children recursively
         for child in cursor_data["children"]:
